@@ -1,13 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: var(--font-jakarta), Helvetica, sans-serif;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

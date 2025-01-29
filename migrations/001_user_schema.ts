@@ -1,6 +1,8 @@
 import { Kysely, sql } from "kysely";
 
+// Inconsistent casing is due to auth.js requirements
 export const up = async (db: Kysely<any>): Promise<void> => {
+  // Users table
   await db.schema
     .createTable("User")
     .addColumn("id", "uuid", (col) =>
@@ -12,6 +14,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("image", "text")
     .execute();
 
+  // Account table
   await db.schema
     .createTable("Account")
     .addColumn("id", "uuid", (col) =>
@@ -32,6 +35,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("session_state", "text")
     .execute();
 
+  // Session table
   await db.schema
     .createTable("Session")
     .addColumn("id", "uuid", (col) =>
@@ -44,6 +48,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("expires", "timestamptz", (col) => col.notNull())
     .execute();
 
+  // Verification token table
   await db.schema
     .createTable("VerificationToken")
     .addColumn("identifier", "text", (col) => col.notNull())

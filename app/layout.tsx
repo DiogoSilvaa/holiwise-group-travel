@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/auth";
 import { Navbar } from "@/components/navbar/navbar";
+import { QueryProvider } from "@/contexts/query";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -22,12 +23,14 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${jakartaSans.variable} antialiased`}>
-        <div className="flex flex-col min-h-full">
-          <Navbar />
-          <main className="flex-1 overflow-x-hidden  pt-6">
-            <AuthProvider>{children}</AuthProvider>
-          </main>
-        </div>
+        <AuthProvider>
+          <QueryProvider>
+            <div className="flex flex-col min-h-full">
+              <Navbar />
+              <main className="flex-1 overflow-x-hidden  pt-6">{children}</main>
+            </div>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

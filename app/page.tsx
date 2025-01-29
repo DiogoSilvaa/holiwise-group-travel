@@ -1,6 +1,19 @@
+"use client";
+
 import { TripFolder } from "@/components/trip-folder/trip-folder";
+import { useQuery } from "@tanstack/react-query";
 
 const Home = () => {
+  const { data: trips } = useQuery({
+    queryKey: ["trips"],
+    queryFn: async () => {
+      const r = await fetch(
+        "/api/trips?userId=26fd3b29-c5d4-4f9b-873e-2c75f8ea84c1"
+      );
+      return await r.json();
+    },
+  });
+
   return (
     <div className="container px-6 flex flex-col space-y-8">
       <div className="text-center">

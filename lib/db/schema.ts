@@ -9,11 +9,7 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
-export type Int8 = ColumnType<
-  string,
-  bigint | number | string,
-  bigint | number | string
->;
+export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
@@ -32,11 +28,43 @@ export interface Account {
   userId: string;
 }
 
+export interface Destination {
+  id: Generated<string>;
+  image_url: string;
+  name: string;
+}
+
 export interface Session {
   expires: Timestamp;
   id: Generated<string>;
   sessionToken: string;
   userId: string;
+}
+
+export interface Trip {
+  created_at: Generated<Timestamp | null>;
+  end_date: Timestamp;
+  id: Generated<string>;
+  name: string;
+  owner_id: string;
+  selected_destination_id: string | null;
+  start_date: Timestamp;
+}
+
+export interface TripAccess {
+  trip_id: string;
+  user_id: string;
+}
+
+export interface TripDestination {
+  destination_id: string;
+  trip_id: string;
+}
+
+export interface TripVotes {
+  destination_id: string;
+  trip_id: string;
+  user_id: string;
 }
 
 export interface User {
@@ -55,7 +83,12 @@ export interface VerificationToken {
 
 export interface DB {
   Account: Account;
+  destination: Destination;
   Session: Session;
+  trip: Trip;
+  trip_access: TripAccess;
+  trip_destination: TripDestination;
+  trip_votes: TripVotes;
   User: User;
   VerificationToken: VerificationToken;
 }

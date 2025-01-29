@@ -5,7 +5,7 @@ interface MenuItemProps {
   icon: ReactNode;
   text: string;
   isActive: boolean;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }
 
 export const MenuItem: FC<MenuItemProps> = ({
