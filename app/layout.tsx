@@ -24,7 +24,7 @@ const RootLayout = ({
       <body className={`${jakartaSans.variable} antialiased`}>
         <div className="flex flex-col min-h-full">
           <Navbar />
-          <main className="flex-1 overflow-x-hidden">
+          <main className="flex-1 overflow-x-hidden  pt-6">
             <AuthProvider>{children}</AuthProvider>
           </main>
         </div>

@@ -1,13 +1,31 @@
-"use client";
-
-import { signIn, useSession } from "next-auth/react";
+import { TripFolder } from "@/components/trip-folder/trip-folder";
 
 const Home = () => {
-  const { data: session } = useSession();
-  if (!session) {
-    // signIn("google");
-  }
-  return <div>asd</div>;
+  return (
+    <div className="container px-6 flex flex-col space-y-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold">My trips</h1>
+        <h2 className="mt-3.5 text-gray-800/65">
+          Organise all your travel planning in one place
+        </h2>
+      </div>
+      <section>
+        <div className="flex space-x-4">
+          <p className="font-bold text-2xl">My trips</p>
+          <button className="">+ Create</button>
+        </div>
+        <div className="grid grid-cols-2 gap-x-2 gap-y-6">
+          <TripFolder />
+        </div>
+      </section>
+      <section>
+        <p className="font-bold text-2xl">My destinations</p>
+        <div className="grid grid-cols-2 gap-x-2 gap-y-6">
+          <TripFolder />
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default Home;
