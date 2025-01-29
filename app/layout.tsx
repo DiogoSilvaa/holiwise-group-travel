@@ -1,0 +1,36 @@
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
+import { AuthProvider } from "@/contexts/auth";
+import { Navbar } from "@/components/navbar/navbar";
+
+const jakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Holiwise",
+  description: "AI travel agency",
+};
+
+const RootLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
+  return (
+    <html lang="en">
+      <body className={`${jakartaSans.variable} antialiased`}>
+        <div className="flex flex-col min-h-full">
+          <Navbar />
+          <main className="flex-1 overflow-x-hidden">
+            <AuthProvider>{children}</AuthProvider>
+          </main>
+        </div>
+      </body>
+    </html>
+  );
+};
+
+export default RootLayout;
