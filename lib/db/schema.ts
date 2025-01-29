@@ -32,6 +32,7 @@ export interface Destination {
   id: Generated<string>;
   image_url: string;
   name: string;
+  type: string;
 }
 
 export interface Session {
@@ -49,6 +50,7 @@ export interface Trip {
   owner_id: string;
   selected_destination_id: string | null;
   start_date: Timestamp;
+  status: Generated<string | null>;
 }
 
 export interface TripAccess {

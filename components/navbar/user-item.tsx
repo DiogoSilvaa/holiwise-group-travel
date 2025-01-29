@@ -14,6 +14,7 @@ import { Booking } from "../icons/booking";
 import { Cog } from "../icons/cog";
 import classNames from "classnames";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "../button/button";
 
 interface DropdownItemProps {
   icon: ReactNode;
@@ -48,23 +49,23 @@ export const UserItem: FC = () => {
 
   if (status === "unauthenticated" || !data?.user?.email) {
     return (
-      <button
+      <Button
         className="flex items-center space-x-3 w-full"
         onClick={() => signIn("google")}
-      >
-        <UserIcon />
-        <span className="truncate">Log in</span>
-      </button>
+        icon={<UserIcon />}
+        text="Log in"
+      />
     );
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center space-x-3 w-full">
-          <UserIcon email={data.user.email} />
-          <span className="truncate">diogonnobrega@gmail.com</span>
-        </button>
+        <Button
+          className="flex items-center space-x-3 w-full border-none"
+          icon={<UserIcon email={data.user.email} />}
+          text="diogonnobrega@gmail.com"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col truncate w-64 space-y-1">
         <DropdownItem icon={<Person />} text="Profile" isDisabled />

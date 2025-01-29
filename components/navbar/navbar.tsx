@@ -13,7 +13,11 @@ export const Navbar: FC = () => {
     <>
       <header className="sticky top-0 inset-0 z-30 pl-6 pr-16 py-3 bg-white border-b lg:hidden">
         <nav className="flex w-full items-center">
-          <Button icon={<Hamburger />} onClick={() => setSideOpen(true)} />
+          <Button
+            icon={<Hamburger />}
+            onClick={() => setSideOpen(true)}
+            className="rounded-xl"
+          />
           <Logo className="mx-auto" />
         </nav>
       </header>

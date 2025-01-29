@@ -24,7 +24,7 @@ export const SideMenu: FC<SideMenuProps> = ({ isSideOpen, closeSide }) => {
         )}
       >
         <div className="border-b flex items-center py-3 pl-5 space-x-5">
-          <Button icon={<Cross />} onClick={closeSide} />
+          <Button icon={<Cross />} onClick={closeSide} className="rounded-xl" />
           <Logo />
         </div>
         <ul className="flex-1 flex flex-col gap-2 px-6 py-3">

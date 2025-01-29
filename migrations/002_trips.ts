@@ -8,6 +8,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
       col.primaryKey().defaultTo(sql`gen_random_uuid()`)
     )
     .addColumn("name", "text", (col) => col.notNull())
+    .addColumn("type", "text", (col) => col.notNull())
     .addColumn("image_url", "text", (col) => col.notNull())
     .execute();
 
@@ -20,6 +21,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("owner_id", "uuid", (col) =>
       col.notNull().references("User.id").onDelete("cascade")
     )
+    .addColumn("status", "text", (col) => col.defaultTo("active"))
     .addColumn("name", "text", (col) => col.notNull())
     .addColumn("start_date", "date", (col) => col.notNull())
     .addColumn("end_date", "date", (col) => col.notNull())
