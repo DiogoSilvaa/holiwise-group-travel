@@ -31,12 +31,6 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("created_at", "timestamp", (col) => col.defaultTo(sql`now()`))
     .execute();
 
-  // Add constraint for dates
-  await db.schema
-    .alterTable("trip")
-    .addCheckConstraint("trip_start_before_end", sql`start_date < end_date`)
-    .execute();
-
   // Trip destination link table
   await db.schema
     .createTable("trip_destination")

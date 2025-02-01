@@ -14,4 +14,5 @@ export interface TripPayload {
     end?: Date;
   };
   userId: string;
+  name: string;
 }

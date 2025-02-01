@@ -20,7 +20,6 @@ export const GET = async (req: Request) => {
 export const POST = async (req: Request) => {
   try {
     const requestBody: TripPayload = await req.json();
-    console.log("requestBody", requestBody);
     const { userId, anywhere, destinationId } = requestBody;
 
     if (!userId || (!anywhere && destinationId === "")) {

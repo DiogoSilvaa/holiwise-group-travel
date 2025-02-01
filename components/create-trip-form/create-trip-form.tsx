@@ -20,7 +20,8 @@ import { TripPayload } from "@/app/api/trips/types";
 import { useCreateTrip } from "@/hooks/trip";
 import { DestinationInput } from "./destination-input";
 import { useFetchDestinations } from "@/hooks/destination";
-import { useSession } from "next-auth/react";
+import { Input } from "../input";
+import { FormInput } from "lucide-react";
 
 interface CreateTripFormProps {
   children: ReactNode;
@@ -37,8 +38,8 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       destinationId: "",
-      anywhere: false,
       date: undefined,
+      name: "",
     },
   });
 
@@ -73,21 +74,50 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
     form.reset();
   };
 
+  const handleClose = () => {
+    setOpen(!open);
+    setTempDates({});
+    form.reset();
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-11/12 rounded-lg">
         <DialogHeader className="flex items-start">
           <DialogTitle>Create new trip</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <form
+            className="flex flex-col space-y-6"
+            onSubmit={form.handleSubmit(handleSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="space-y-0">
+                  <Label>Name</Label>
+                  <FormControl className="h-12 text-sm">
+                    <div className="flex has-[:disabled]:border-gray-300 has-[:disabled]:text-gray-300 items-center pl-3 h-11 space-x-0 rounded-md border shadow-sm has-[:focus]:border-black">
+                      <FormInput className="text-gray-400" />
+                      <Input
+                        {...field}
+                        placeholder="Choose your trip name"
+                        className="border-0 shadow-none focus-visible:ring-0 text-sm"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="destinationId"
               render={({ field }) => (
                 <FormItem className="space-y-0">
-                  <Label>Destination</Label>
+                  <Label>Destination (optional)</Label>
                   <FormControl>
                     <DestinationInput
                       disabled={form.watch("anywhere")}
@@ -99,37 +129,17 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="anywhere"
-              render={({ field }) => (
-                <FormItem className="flex justify-end mt-3 mb-5">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      field.onChange(!field.value);
-                      if (!field.value) form.setValue("destinationId", "");
-                    }}
-                    className={`w-1/2 h-12 bg-white ${
-                      field.value ? "border-black" : "border-gray-300"
-                    }`}
-                  >
-                    Not decided yet
-                  </Button>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Label>Dates (optional)</Label>
-            <DatePicker
-              value={tempDates}
-              onChange={setTempDates}
-              isOpen={isCalendarOpen}
-              onOpenChange={handleCalendarOpen}
-              onCancel={handleDateCancel}
-            />
-            <div className="flex gap-4 mt-6">
+            <div>
+              <Label>Dates (optional)</Label>
+              <DatePicker
+                value={tempDates}
+                onChange={setTempDates}
+                isOpen={isCalendarOpen}
+                onOpenChange={handleCalendarOpen}
+                onCancel={handleDateCancel}
+              />
+            </div>
+            <div className="flex gap-4">
               <Button
                 type="button"
                 variant="ghost"

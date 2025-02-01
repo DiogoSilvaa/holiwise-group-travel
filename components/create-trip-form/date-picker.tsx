@@ -24,9 +24,9 @@ export const DatePicker = ({
     <PopoverTrigger asChild>
       <Button
         variant="outline"
-        className="justify-start h-12 border-gray-300 w-full"
+        className="justify-start h-12 border-gray-300 w-full hover:border-black hover:bg-white"
       >
-        <CalendarIcon className="mr-2 h-4 w-4" />
+        <CalendarIcon className="mr-2 h-4 w-4 text-gray-400" />
         {value?.start && value?.end ? (
           `${format(value.start, "MMM dd")} - ${format(value.end, "MMM dd")}`
         ) : (
