@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { KyselyAdapter } from "@auth/kysely-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { Session, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
@@ -11,6 +11,20 @@ export const authOptions = {
     }),
   ],
   adapter: KyselyAdapter(db as any),
+  callbacks: {
+    session: async ({
+      session,
+      user,
+    }: {
+      session: Session;
+      user: User;
+    }): Promise<Session> => {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

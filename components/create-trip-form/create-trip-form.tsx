@@ -20,6 +20,7 @@ import { TripPayload } from "@/app/api/trips/types";
 import { useCreateTrip } from "@/hooks/trip";
 import { DestinationInput } from "./destination-input";
 import { useFetchDestinations } from "@/hooks/destination";
+import { useSession } from "next-auth/react";
 
 interface CreateTripFormProps {
   children: ReactNode;
