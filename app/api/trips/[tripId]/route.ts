@@ -1,11 +1,12 @@
 import { constructResponse } from "../../helpers";
+import { deleteTrip, updateTrip } from "./mutations";
 import { querySingleTrip } from "./queries";
 
 export const GET = async (
   req: Request,
   { params }: { params: { tripId: string } }
 ) => {
-  const { tripId } = params;
+  const { tripId } = await params;
   const userId = new URL(req.url).searchParams.get("userId");
 
   if (!userId || typeof userId !== "string") {
@@ -18,6 +19,36 @@ export const GET = async (
       return constructResponse({ error: "Trip not found" }, 404);
     }
     return constructResponse(trip, 200);
+  } catch (error) {
+    return constructResponse({ error: "Internal server error" }, 500);
+  }
+};
+
+export const PATCH = async (
+  req: Request,
+  { params }: { params: { tripId: string } }
+) => {
+  const { tripId } = await params;
+  const updates = await req.json();
+
+  try {
+    await updateTrip(tripId, updates);
+    return constructResponse({ success: true }, 200);
+  } catch (error) {
+    console.log("test", error);
+    return constructResponse({ error: "Update failed" }, 500);
+  }
+};
+
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { tripId: string } }
+) => {
+  const { tripId } = await params;
+
+  try {
+    await deleteTrip(tripId);
+    return constructResponse({ success: true, tripId }, 200);
   } catch (error) {
     return constructResponse({ error: "Internal server error" }, 500);
   }

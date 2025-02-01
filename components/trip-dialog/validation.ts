@@ -8,5 +8,5 @@ export const tripSchema = z.object({
       end: z.date().optional(),
     })
     .optional(),
-  destinationId: z.string().nullable(),
+  destinationId: z.string().optional(),
 });

@@ -14,22 +14,23 @@ import { Form } from "../form";
 import { Button } from "../button";
 import { TripFormFields } from "./trip-form-fields";
 import { useDatepicker } from "./date-picker-hook";
-import { TripPayload } from "@/app/api/trips/types";
+import { CompleteTrip, TripPayload } from "@/app/api/trips/types";
 import { tripSchema } from "./validation";
 import { Archive, Trash } from "lucide-react";
-import { CompleteTrip } from "@/app/api/trips/[tripId]/types";
+import { useDeleteTrip, useUpdateTrip } from "@/hooks/trip";
+import { useRouter } from "next/navigation";
 
 interface EditTripDialogProps {
   children: ReactNode;
-  trip?: CompleteTrip;
+  trip: CompleteTrip;
 }
 
 export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
   const defaults = {
-    name: trip?.name || "",
+    name: trip.name,
     date: {
-      start: trip?.start ? new Date(trip.start) : null,
-      end: trip?.end ? new Date(trip.end) : null,
+      start: trip.start ? new Date(trip.start) : undefined,
+      end: trip.end ? new Date(trip.end) : undefined,
     },
   };
   const {
@@ -39,7 +40,9 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
     handleCalendarOpenChange,
     handleCancelDates,
   } = useDatepicker({ start: defaults.date.start, end: defaults.date.end });
-
+  const { mutate } = useUpdateTrip();
+  const router = useRouter();
+  const { mutate: deleteTrip } = useDeleteTrip();
   const form = useForm<TripPayload>({
     resolver: zodResolver(tripSchema),
     defaultValues: defaults,
@@ -55,7 +58,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
   const onCancelDate = () => handleCancelDates((d) => form.setValue("date", d));
 
   const onSubmit = (data: TripPayload) => {
-    console.log("Saving trip updates", data);
+    mutate({ ...data, id: trip.id });
     setOpen(false);
     form.reset(data);
   };
@@ -69,13 +72,14 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
   };
 
   const handleArchiveTrip = () => {
-    console.log("Archiving trip");
+    mutate({ status: "archived", id: trip.id });
     setOpen(false);
   };
 
   const handleDeleteTrip = () => {
-    console.log("Deleting trip");
+    deleteTrip(trip.id);
     setOpen(false);
+    router.push("/");
   };
 
   const onDialogOpenChange = (open: boolean) => {
@@ -138,7 +142,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
               <Button
                 type="submit"
                 variant="default"
-                className="flex-1 h-12 bg-primary-500 text-white"
+                className="flex-1 h-12 bg-primary-500 text-black"
                 disabled={!form.formState.isValid}
               >
                 Save

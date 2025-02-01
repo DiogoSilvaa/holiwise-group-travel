@@ -4,7 +4,9 @@ import { queryAllTrips } from "./queries";
 import { TripPayload } from "./types";
 
 export const GET = async (req: Request) => {
-  const userId = new URL(req.url).searchParams.get("userId");
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("userId");
+
   if (!userId || typeof userId != "string") {
     return constructResponse({ error: "Missing required field: id" }, 400);
   }

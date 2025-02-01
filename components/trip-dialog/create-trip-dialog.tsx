@@ -44,7 +44,7 @@ export const CreateTripDialog: FC<CreateTripDialogProps> = ({
     defaultValues: {
       name: "",
       date: undefined,
-      destinationId: null,
+      destinationId: undefined,
     },
   });
 

@@ -5,7 +5,7 @@ import { ArrowLeft, Pencil } from "lucide-react";
 import { Button } from "@/components/button";
 import { format } from "date-fns";
 import { EditTripDialog } from "@/components/trip-dialog/edit-trip-dialog";
-import { CompleteTrip } from "@/app/api/trips/[tripId]/types";
+import { CompleteTrip } from "@/app/api/trips/types";
 
 export interface TripHeaderProps {
   trip: CompleteTrip;
