@@ -37,7 +37,7 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
   const form = useForm<TripPayload>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      destinationId: "",
+      destinationId: null,
       date: undefined,
       name: "",
     },
@@ -65,6 +65,7 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
       "date",
       originalDates.start || originalDates.end ? originalDates : undefined
     );
+    setTempDates({});
     setIsCalendarOpen(false);
   };
 
@@ -119,11 +120,7 @@ export const CreateTripForm: FC<CreateTripFormProps> = ({ children }) => {
                 <FormItem className="space-y-0">
                   <Label>Destination (optional)</Label>
                   <FormControl>
-                    <DestinationInput
-                      disabled={form.watch("anywhere")}
-                      options={dests ?? []}
-                      field={field}
-                    />
+                    <DestinationInput options={dests ?? []} field={field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

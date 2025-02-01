@@ -1,5 +1,5 @@
 import { Trip, TripPayload } from "@/app/api/trips/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const createTrip = async (tripData: TripPayload) => {
@@ -20,7 +20,7 @@ export const useFetchTrips = () => {
   const { data: session, status } = useSession();
 
   return useQuery<Trip[]>({
-    queryKey: ["trips", session?.user?.id],
+    queryKey: ["trips"],
     queryFn: async () => {
       if (!session?.user?.id) return [];
 
@@ -33,14 +33,17 @@ export const useFetchTrips = () => {
 
 export const useCreateTrip = () => {
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (tripData: TripPayload) => {
+    mutationFn: async (tripData: TripPayload) => {
       if (!session?.user?.id) {
         throw new Error("User not authenticated");
       }
-      return createTrip({ ...tripData, userId: session.user.id });
+      return await createTrip({ ...tripData, userId: session.user.id });
     },
-    mutationKey: ["trips"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["trips"] });
+    },
   });
 };

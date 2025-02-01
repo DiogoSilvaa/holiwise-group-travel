@@ -7,8 +7,7 @@ export interface Trip {
 }
 
 export interface TripPayload {
-  destinationId?: string;
-  anywhere: boolean;
+  destinationId: string | null;
   date?: {
     start?: Date;
     end?: Date;

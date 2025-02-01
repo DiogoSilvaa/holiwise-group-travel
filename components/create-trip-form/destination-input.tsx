@@ -18,13 +18,11 @@ interface CommandItem {
 
 interface DestinationInputProps {
   field: ControllerRenderProps<TripPayload, "destinationId">;
-  disabled: boolean;
   options: CommandItem[];
 }
 
 export const DestinationInput: FC<DestinationInputProps> = ({
   field,
-  disabled,
   options,
 }) => {
   const [inputValue, setInputValue] = useState("");
@@ -50,7 +48,6 @@ export const DestinationInput: FC<DestinationInputProps> = ({
             if (!isOpen) setIsOpen(true);
           }}
           placeholder="Choose your destination"
-          disabled={disabled}
           className="h-12"
         />
         <CommandList

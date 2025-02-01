@@ -20,15 +20,15 @@ export const GET = async (req: Request) => {
 export const POST = async (req: Request) => {
   try {
     const requestBody: TripPayload = await req.json();
-    const { userId, anywhere, destinationId } = requestBody;
+    const { userId } = requestBody;
 
-    if (!userId || (!anywhere && destinationId === "")) {
+    if (!userId) {
       return constructResponse({ error: "Missing required fields" }, 400);
     }
 
-    const newTrip = await createTrip(requestBody);
+    const tripId = await createTrip(requestBody);
 
-    return constructResponse(newTrip, 201);
+    return constructResponse({ id: tripId }, 201);
   } catch (error) {
     return constructResponse({ error: "Internal server error" }, 500);
   }
