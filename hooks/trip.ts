@@ -16,23 +16,31 @@ const createTrip = async (tripData: TripPayload) => {
   return res.json();
 };
 
-export const useCreateTrip = () => {
-  const { data: session } = useSession();
-  const userEmail = session?.user?.email;
+export const useFetchTrips = () => {
+  const { data: session, status } = useSession();
 
-  return useMutation({
-    mutationFn: (tripData: TripPayload) =>
-      createTrip({ ...tripData, userEmail: userEmail! }),
-    mutationKey: ["trips"],
+  return useQuery<Trip[]>({
+    queryKey: ["trips", session?.user?.id],
+    queryFn: async () => {
+      if (!session?.user?.id) return [];
+
+      const r = await fetch(`/api/trips?userId=${session.user.id}`);
+      return await r.json();
+    },
+    enabled: status !== "loading" && !!session?.user?.id,
   });
 };
 
-export const useFetchTrips = () => {
-  return useQuery<Trip[]>({
-    queryKey: ["trips"],
-    queryFn: async () => {
-      const r = await fetch("/api/trips");
-      return await r.json();
+export const useCreateTrip = () => {
+  const { data: session } = useSession();
+
+  return useMutation({
+    mutationFn: (tripData: TripPayload) => {
+      if (!session?.user?.id) {
+        throw new Error("User not authenticated");
+      }
+      return createTrip({ ...tripData, userId: session.user.id });
     },
+    mutationKey: ["trips"],
   });
 };

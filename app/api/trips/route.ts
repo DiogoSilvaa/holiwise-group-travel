@@ -5,12 +5,12 @@ import { TripPayload } from "./types";
 
 export const GET = async (req: Request) => {
   const userId = new URL(req.url).searchParams.get("userId");
-  // console.log("userId", userId);
-  // if (!userId || typeof userId != "string") {
-  //   return constructResponse({ error: "Missing required field: id" }, 400);
-  // }
+  if (!userId || typeof userId != "string") {
+    return constructResponse({ error: "Missing required field: id" }, 400);
+  }
+
   try {
-    const trips = await queryAllTrips();
+    const trips = await queryAllTrips(userId);
     return constructResponse(trips, 200);
   } catch (error) {
     return constructResponse({ error: "Internal server error" }, 500);
@@ -21,9 +21,9 @@ export const POST = async (req: Request) => {
   try {
     const requestBody: TripPayload = await req.json();
     console.log("requestBody", requestBody);
-    const { userEmail, anywhere, destinationId } = requestBody;
+    const { userId, anywhere, destinationId } = requestBody;
 
-    if (!userEmail || (!anywhere && destinationId === "")) {
+    if (!userId || (!anywhere && destinationId === "")) {
       return constructResponse({ error: "Missing required fields" }, 400);
     }
 
@@ -31,7 +31,6 @@ export const POST = async (req: Request) => {
 
     return constructResponse(newTrip, 201);
   } catch (error) {
-    console.log(error);
     return constructResponse({ error: "Internal server error" }, 500);
   }
 };

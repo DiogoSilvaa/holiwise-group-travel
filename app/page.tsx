@@ -20,8 +20,6 @@ const defaultTypeOption = { value: "all", text: "All destinations" };
 const Home = () => {
   const { data: dests } = useFetchDestinations();
   const { data: trips } = useFetchTrips();
-  console.log("trips", trips);
-  console.log("dests", dests);
 
   const [type, setType] = useState("all");
   const destinations =
@@ -47,12 +45,12 @@ const Home = () => {
           </CreateTripForm>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
-          {trips?.map(({ id, owner_email, selected_destination_id }) => (
+          {trips?.map(({ id, ownerEmail, name }) => (
             <Card
               key={id}
-              name={selected_destination_id ?? ""}
+              name={name}
               image_src="/images/lisbon.webp"
-              owner_email={owner_email}
+              owner_email={ownerEmail}
             />
           ))}
         </div>

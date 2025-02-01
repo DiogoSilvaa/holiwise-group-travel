@@ -1,8 +1,9 @@
 export interface Trip {
   id: string;
-  owner_email: string;
-  image_urls: Array<string | null>;
-  selected_destination_id: string | null;
+  name: string;
+  selectedDestination: string | null;
+  imageUrls: Array<string | null>;
+  ownerEmail: string;
 }
 
 export interface TripPayload {
@@ -12,5 +13,5 @@ export interface TripPayload {
     start?: Date;
     end?: Date;
   };
-  userEmail: string;
+  userId: string;
 }
