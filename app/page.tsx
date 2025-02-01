@@ -1,12 +1,13 @@
 "use client";
 
 import { Card } from "@/components/card/card";
-import { useQuery } from "@tanstack/react-query";
-import { Destination } from "./api/destinations/types";
 import { TypeSelect } from "@/components/type-select/type-select";
 import { useState } from "react";
 import { Button } from "@/components/button/button";
 import { Plus } from "lucide-react";
+import { CreateTripForm } from "@/components/create-trip-form/create-trip-form";
+import { useFetchDestinations } from "@/hooks/destination";
+import { useFetchTrips } from "@/hooks/trip";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -17,13 +18,10 @@ const destinationTypeOptions = [
 const defaultTypeOption = { value: "all", text: "All destinations" };
 
 const Home = () => {
-  const { data: dests } = useQuery<Destination[]>({
-    queryKey: ["destinations"],
-    queryFn: async () => {
-      const r = await fetch("/api/destinations");
-      return await r.json();
-    },
-  });
+  const { data: dests } = useFetchDestinations();
+  const { data: trips } = useFetchTrips();
+  console.log("trips", trips);
+  console.log("dests", dests);
 
   const [type, setType] = useState("all");
   const destinations =
@@ -40,14 +38,23 @@ const Home = () => {
       <section>
         <div className="flex space-x-4 items-center">
           <p className="font-bold text-2xl">My trips</p>
-          <Button
-            icon={<Plus size={14} />}
-            text="Create"
-            className="h-10 w-24 bg-gray-50 rounded-md"
-          />
+          <CreateTripForm>
+            <Button
+              icon={<Plus size={14} />}
+              text="Create"
+              className="h-10 w-24 bg-gray-50 rounded-md"
+            />
+          </CreateTripForm>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
-          <Card name="Lisbon" image_src="/images/lisbon.webp" />
+          {trips?.map(({ id, owner_email, selected_destination_id }) => (
+            <Card
+              key={id}
+              name={selected_destination_id ?? ""}
+              image_src="/images/lisbon.webp"
+              owner_email={owner_email}
+            />
+          ))}
         </div>
       </section>
       <section>

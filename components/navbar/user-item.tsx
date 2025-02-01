@@ -61,11 +61,13 @@ export const UserItem: FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          className="flex items-center space-x-3 w-full border-none"
-          icon={<UserIcon email={data.user.email} />}
-          text="diogonnobrega@gmail.com"
-        />
+        <div>
+          <Button
+            className="flex items-center space-x-3 w-full border-none"
+            icon={<UserIcon email={data.user.email} />}
+            text={data.user.email}
+          />
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col truncate w-64 space-y-1">
         <DropdownItem icon={<Person />} text="Profile" isDisabled />

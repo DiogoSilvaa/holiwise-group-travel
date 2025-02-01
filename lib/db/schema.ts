@@ -44,12 +44,12 @@ export interface Session {
 
 export interface Trip {
   created_at: Generated<Timestamp | null>;
-  end_date: Timestamp;
+  end_date: Timestamp | null;
   id: Generated<string>;
   name: string;
   owner_id: string;
   selected_destination_id: string | null;
-  start_date: Timestamp;
+  start_date: Timestamp | null;
   status: Generated<string | null>;
 }
 

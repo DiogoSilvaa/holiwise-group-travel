@@ -1,16 +1,16 @@
 import { db } from "@/lib/db";
 import { Trip } from "./types";
 
-export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
+export const queryAllTrips = async (): Promise<Trip[]> => {
   const trips = await db
     .selectFrom("trip as t")
     .leftJoin("trip_destination as td", "t.id", "td.trip_id")
     .leftJoin("destination as d", "d.id", "td.destination_id")
     .leftJoin("User as u", "u.id", "t.owner_id")
     .leftJoin("trip_access as ta", "ta.trip_id", "t.id")
-    .where((eb) =>
-      eb.or([eb("t.owner_id", "=", userId), eb("ta.user_id", "=", userId)])
-    )
+    // .where((eb) =>
+    //   eb.or([eb("t.owner_id", "=", userId), eb("ta.user_id", "=", userId)])
+    // )
     .select([
       "t.id",
       "u.email",
@@ -26,7 +26,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
       if (!acc[trip.id]) {
         acc[trip.id] = {
           id: trip.id,
-          owner_email: trip.email,
+          owner_email: trip.email ?? "",
           selected_destination_id: trip.selected_destination_id,
           image_urls: [],
         };
@@ -45,6 +45,6 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
       return acc;
     }, {} as Record<string, Trip>)
   );
-
+  console.log("formattedTrips", formattedTrips);
   return formattedTrips;
 };

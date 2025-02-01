@@ -23,8 +23,8 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     )
     .addColumn("status", "text", (col) => col.defaultTo("active"))
     .addColumn("name", "text", (col) => col.notNull())
-    .addColumn("start_date", "date", (col) => col.notNull())
-    .addColumn("end_date", "date", (col) => col.notNull())
+    .addColumn("start_date", "date")
+    .addColumn("end_date", "date")
     .addColumn("selected_destination_id", "uuid", (col) =>
       col.references("destination.id").onDelete("set null")
     )
