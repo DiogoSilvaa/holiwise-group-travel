@@ -9,8 +9,8 @@ export interface Trip {
 export interface TripPayload {
   destinationId: string | null;
   date?: {
-    start?: Date;
-    end?: Date;
+    start?: Date | null;
+    end?: Date | null;
   };
   userId: string;
   name: string;

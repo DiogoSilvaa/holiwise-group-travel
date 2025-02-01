@@ -9,8 +9,8 @@ export const createTrip = async (trip: TripPayload) => {
     .values({
       name: name,
       owner_id: userId,
-      end_date: date?.start,
-      start_date: date?.end,
+      start_date: date?.start,
+      end_date: date?.end,
       selected_destination_id: destinationId,
     })
     .returning("id")

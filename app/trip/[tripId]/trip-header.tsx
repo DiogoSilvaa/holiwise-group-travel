@@ -4,14 +4,15 @@ import Link from "next/link";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { Button } from "@/components/button";
 import { format } from "date-fns";
+import { EditTripDialog } from "@/components/trip-dialog/edit-trip-dialog";
+import { CompleteTrip } from "@/app/api/trips/[tripId]/types";
 
 export interface TripHeaderProps {
-  tripName?: string;
-  start?: Date | null | undefined;
-  end?: Date | null | undefined;
+  trip: CompleteTrip;
 }
 
-export const TripHeader = ({ tripName, start, end }: TripHeaderProps) => {
+export const TripHeader = ({ trip }: TripHeaderProps) => {
+  const { start, end, name } = trip;
   const startDate = start ? new Date(start) : null;
   const endDate = end ? new Date(end) : null;
   const formattedDates =
@@ -25,10 +26,12 @@ export const TripHeader = ({ tripName, start, end }: TripHeaderProps) => {
         <ArrowLeft className="cursor-pointer" />
       </Link>
       <div className="flex items-center justify-center space-x-2 mt-4">
-        <h1 className="text-2xl font-bold">{tripName}</h1>
-        <Button variant="outline" className="w-8 h-8">
-          <Pencil />
-        </Button>
+        <h1 className="text-2xl font-bold">{name}</h1>
+        <EditTripDialog trip={trip}>
+          <Button variant="outline" className="w-8 h-8">
+            <Pencil />
+          </Button>
+        </EditTripDialog>
       </div>
       <h2 className="mt-3.5 text-gray-800/65">{formattedDates}</h2>
     </div>

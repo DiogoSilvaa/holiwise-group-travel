@@ -5,7 +5,7 @@ import { TypeSelect } from "@/components/type-select/type-select";
 import { useState } from "react";
 import { Button } from "@/components/button/button";
 import { Plus } from "lucide-react";
-import { CreateTripForm } from "@/components/create-trip-form/create-trip-form";
+import { CreateTripDialog } from "@/components/trip-dialog/create-trip-dialog";
 import { useFetchDestinations } from "@/hooks/destination";
 import { useFetchTrips } from "@/hooks/trip";
 import { DestinationCardMenu } from "@/components/card/destination-menu";
@@ -38,13 +38,13 @@ const Home = () => {
       <section>
         <div className="flex space-x-4 items-center">
           <p className="font-bold text-2xl">My trips</p>
-          <CreateTripForm>
+          <CreateTripDialog destinations={dests ?? []}>
             <Button
               icon={<Plus size={14} />}
               text="Create"
               className="h-10 w-24 bg-gray-50 rounded-md"
             />
-          </CreateTripForm>
+          </CreateTripDialog>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
           {trips?.map(({ id, ownerEmail, name }) => (

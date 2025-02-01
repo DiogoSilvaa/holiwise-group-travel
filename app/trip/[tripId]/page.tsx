@@ -14,13 +14,13 @@ const TripPage = () => {
 
   const { data: trip, status } = useFetchTrip(tripId);
 
-  if (status === "pending") {
+  if (status === "pending" || !trip) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="container px-6 flex flex-col space-y-8">
-      <TripHeader tripName={trip?.name} start={trip?.start} end={trip?.end} />
+      <TripHeader trip={trip} />
       <TripTabs tripId={tripId} />
     </div>
   );
