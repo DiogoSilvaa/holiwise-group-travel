@@ -8,6 +8,8 @@ import { Plus } from "lucide-react";
 import { CreateTripForm } from "@/components/create-trip-form/create-trip-form";
 import { useFetchDestinations } from "@/hooks/destination";
 import { useFetchTrips } from "@/hooks/trip";
+import { DestinationCardMenu } from "@/components/card/destination-menu";
+import { useRouter } from "next/navigation";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -20,7 +22,7 @@ const defaultTypeOption = { value: "all", text: "All destinations" };
 const Home = () => {
   const { data: dests } = useFetchDestinations();
   const { data: trips } = useFetchTrips();
-
+  const router = useRouter();
   const [type, setType] = useState("all");
   const destinations =
     type === "all" ? dests : dests?.filter((d) => d.type === type);
@@ -51,6 +53,7 @@ const Home = () => {
               name={name}
               image_src="/images/lisbon.webp"
               owner_email={ownerEmail}
+              onClick={() => router.push(`/trip/${id}`)}
             />
           ))}
         </div>
@@ -64,7 +67,17 @@ const Home = () => {
         />
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-3">
           {destinations?.map(({ id, name, image_url }) => (
-            <Card name={name} key={id} image_src={image_url} />
+            <Card
+              name={name}
+              key={id}
+              image_src={image_url}
+              menu={
+                <DestinationCardMenu
+                  onAddToTrip={() => {}}
+                  trips={trips ?? []}
+                />
+              }
+            />
           ))}
         </div>
       </section>
