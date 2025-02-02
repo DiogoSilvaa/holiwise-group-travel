@@ -74,7 +74,11 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
                 {users?.allowedEmails.map((e, index) => (
                   <li key={index} className="flex items-center justify-between text-sm">
                     <span>{e}</span>
-                    <Button variant="ghost" className="p-1" onClick={() => removeEmail(e)}>
+                    <Button
+                      variant="ghost"
+                      className="p-4 hover:bg-white"
+                      onClick={() => removeEmail(e)}
+                    >
                       <Trash size={16} className="text-red-500" />
                     </Button>
                   </li>

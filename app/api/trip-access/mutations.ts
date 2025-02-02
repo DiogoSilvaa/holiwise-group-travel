@@ -7,7 +7,7 @@ export const addTripAccess = async (payload: TripAccessPayload): Promise<TripAcc
   const user = await db
     .selectFrom("User")
     .select(["id", "email"])
-    .where("email", "=", email)
+    .where("email", "=", email.toLowerCase())
     .executeTakeFirst();
 
   if (!user) {
