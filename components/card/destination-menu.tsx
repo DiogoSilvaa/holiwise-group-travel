@@ -5,6 +5,7 @@ import { ActionMenu } from "../action-menu/action-menu";
 import { ActionDialog } from "../action-dialog/action-dialog";
 import { Check, Plus } from "lucide-react";
 import { Trip } from "@/app/api/trips/types";
+import { useXlViewport } from "@/hooks/use-xl-viewport";
 
 interface DestinationCardMenuProps {
   id: string;
@@ -21,9 +22,8 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
   onRemoveFromTrip,
   name,
 }) => {
-  const isXL = useMediaQuery("(min-width: 1280px)");
-
-  const Component = isXL ? ActionDialog : ActionMenu;
+  const { isXl } = useXlViewport();
+  const Component = isXl ? ActionDialog : ActionMenu;
 
   return (
     <Component header={name} description="Add this destination to your trips">

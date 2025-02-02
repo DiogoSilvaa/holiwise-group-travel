@@ -1,9 +1,9 @@
 "use client";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 
 import { Card } from "@/components/card/card";
 import { TypeSelect } from "@/components/type-select/type-select";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "@/components/button";
 import { Plus } from "lucide-react";
 import { CreateTripDialog } from "@/components/trip-dialog/create-trip-dialog";
@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useAddTripDestination, useRemoveTripDestination } from "@/hooks/trip-destination";
 import { DroppableItem } from "@/components/droppable-item/droppable-item";
 import { DraggableItem } from "@/components/draggable-item/draggable-item";
+import { activationConstraint } from "@/components/draggable-item/sensor-delay";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -30,7 +31,7 @@ const defaultTripOption = { value: "all", text: "All trips" };
 
 const defaultTypeOption = { value: "all", text: "All destinations" };
 
-const Home = () => {
+const Home: FC = () => {
   const { data: dests } = useFetchDestinations();
   const { data: trips } = useFetchTrips();
   const { mutate: addToTrip } = useAddTripDestination();
@@ -39,6 +40,12 @@ const Home = () => {
   const router = useRouter();
   const [type, setType] = useState("all");
   const [tripStatus, setTripStatus] = useState("all");
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint,
+    })
+  );
+
   if (!dests || !trips) {
     return null;
   }
@@ -68,6 +75,7 @@ const Home = () => {
       onDragEnd={handleDragEnd}
       onDragStart={(e) => setDraggingId(String(e.active.id))}
       onDragCancel={() => setDraggingId(null)}
+      sensors={sensors}
     >
       <div className="container max-h-full overflow-y-hidden px-6 lg:px-28 flex flex-col space-y-12 pb-10 lg:pb-28 xl:pt-16">
         <div className="text-center">

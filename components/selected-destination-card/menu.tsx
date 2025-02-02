@@ -8,6 +8,7 @@ import { Destination } from "@/app/api/destinations/types";
 import { SheetClose } from "../sheet";
 import { useMediaQuery } from "@react-hookz/web";
 import { ActionDialog } from "../action-dialog/action-dialog";
+import { useXlViewport } from "@/hooks/use-xl-viewport";
 
 export type TripDestinationMenuProps =
   | {
@@ -32,8 +33,8 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
   onRemove,
   isSelected,
 }) => {
-  const isXL = useMediaQuery("(min-width: 1280px)");
-  const Component = isXL ? ActionDialog : ActionMenu;
+  const { isXl } = useXlViewport();
+  const Component = isXl ? ActionDialog : ActionMenu;
 
   return (
     <Component header={destination.name}>

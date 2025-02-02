@@ -1,5 +1,7 @@
 import { FC, ReactNode } from "react";
 import { useDraggable } from "@dnd-kit/core";
+import { useMediaQuery } from "@react-hookz/web";
+import { useXlViewport } from "@/hooks/use-xl-viewport";
 
 interface DraggableItemProps {
   id: string;
@@ -7,8 +9,10 @@ interface DraggableItemProps {
 }
 
 export const DraggableItem: FC<DraggableItemProps> = ({ children, id }) => {
+  const { isXl } = useXlViewport();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id,
+    disabled: !isXl,
   });
   const style = transform
     ? {
@@ -17,7 +21,7 @@ export const DraggableItem: FC<DraggableItemProps> = ({ children, id }) => {
     : undefined;
 
   return (
-    <div {...listeners} {...attributes} ref={setNodeRef} style={style} className="z-50">
+    <div {...listeners} {...attributes} ref={setNodeRef} style={style} className="z-10">
       {children}
     </div>
   );
