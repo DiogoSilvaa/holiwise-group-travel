@@ -64,7 +64,7 @@ export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
         <span>
           <h3 className="font-semibold">Ideas for destinations</h3>
           {dests?.length ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
               {dests?.map((d) => {
                 if (d.id === selectedDestination?.id) {
                   return;

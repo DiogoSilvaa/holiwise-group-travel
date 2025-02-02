@@ -50,6 +50,7 @@ export const UserItem: FC = () => {
           width={24}
           priority
           height={24}
+          sizes="15vw"
         />
         <span>Sign in with Google</span>
       </Button>

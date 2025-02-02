@@ -16,6 +16,7 @@ export const UserIcon: FC<UserIconProps> = ({ size = "normal", img_src }) => {
         width={size === "normal" ? 48 : 28}
         height={size === "normal" ? 48 : 28}
         priority
+        sizes="15vw"
       />
     </div>
   );

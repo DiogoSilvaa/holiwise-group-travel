@@ -48,6 +48,7 @@ export const Card: FC<CardProps> = ({
                   priority
                   quality={50}
                   fill
+                  sizes="33vw"
                   className="object-cover rounded-xl"
                 />
               </div>
@@ -61,6 +62,7 @@ export const Card: FC<CardProps> = ({
               fill
               className="object-cover rounded-xl"
               priority
+              sizes="33vw"
             />
             <div className="absolute inset-0 bg-black opacity-40 rounded-xl"></div>
             <div className="absolute inset-0 flex text-center items-center justify-center p-4 text-white text-sm font-semibold z-10">

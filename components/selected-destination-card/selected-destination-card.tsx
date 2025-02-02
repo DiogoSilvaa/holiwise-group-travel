@@ -41,7 +41,14 @@ export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (props)
   return (
     <div className="w-full lg:max-w-sm p-3 border border-gray-200 rounded-lg">
       <div className="relative aspect-video overflow-hidden rounded-xl">
-        <Image src={image_url} alt={name} fill priority className="object-cover rounded-xl" />
+        <Image
+          src={image_url}
+          alt={name}
+          fill
+          priority
+          className="object-cover rounded-xl"
+          sizes="33vw"
+        />
         <div className="absolute top-2 right-2">
           <TripDestinationMenu {...props} />
         </div>
