@@ -25,6 +25,7 @@ const Home: FC = () => {
   const { trips, addToTrip, removeFromTrip } = useTripManagement();
   const { sensors, draggingId, ...dragHandlers } = useDragAndDrop((tripId, destinationId) => {
     const trip = trips?.find((t) => t.id === tripId);
+    console.log(tripId);
     if (trip && !trip.destinationIds.includes(destinationId)) {
       addToTrip({ tripId, destinationId });
     }

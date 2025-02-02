@@ -9,10 +9,11 @@ export const useDragAndDrop = (
 
   const sensors = useSensors(useSensor(MouseSensor, { activationConstraint }));
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const onDragEnd = (event: DragEndEvent) => {
     const { over: trip, active: destination } = event;
     setDraggingId(null);
-
+    console.log("trip?.id", trip?.id);
+    console.log("destination?.id", destination?.id);
     if (trip?.id && destination?.id) {
       handleValidDrop(String(trip.id), String(destination.id));
     }
@@ -21,8 +22,8 @@ export const useDragAndDrop = (
   return {
     sensors,
     draggingId,
-    handleDragStart: (e: any) => setDraggingId(String(e.active.id)),
-    handleDragCancel: () => setDraggingId(null),
-    handleDragEnd,
+    onDragStart: (e: any) => setDraggingId(String(e.active.id)),
+    onDragCancel: () => setDraggingId(null),
+    onDragEnd,
   };
 };

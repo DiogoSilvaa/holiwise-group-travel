@@ -15,8 +15,8 @@ export const TripsSection: FC<TripsSectionProps> = ({ trips, draggingId, onTripC
       <DroppableItem id={trip.id} key={trip.id}>
         <Card
           name={trip.name}
-          image_urls={trip.imageUrls}
-          owner_src={trip.ownerSrc}
+          imageUrls={trip.imageUrls}
+          ownerSrc={trip.ownerSrc}
           onClick={() => onTripClick(trip.id)}
           draggingDestinationId={draggingId}
           destinationIds={trip.destinationIds}

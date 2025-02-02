@@ -1,84 +1,79 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useMemo } from "react";
 import { UserIcon } from "../user-icon/user-icon";
 import Image from "next/image";
+import { ImageGallery } from "../image-gallery/image-gallery";
 
 interface CardProps {
   name: string;
-  image_urls: string[];
-  owner_src?: string | null;
+  imageUrls: string[];
+  ownerSrc?: string | null;
   onClick?: () => void;
   menu?: ReactNode;
   draggingDestinationId?: string | null;
   destinationIds?: string[];
 }
 
+const DropOverlay = () => (
+  <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+    <span className="text-white font-semibold">DROP HERE</span>
+  </div>
+);
+
+const EmptyState = ({ hideText }: { hideText: boolean }) => (
+  <div className="relative w-full h-full bg-gray-200">
+    <Image
+      src="/images/placeholder.webp"
+      alt="Placholder image"
+      fill
+      className="object-cover rounded-xl"
+      priority
+      sizes="33vw"
+    />
+    {!hideText && (
+      <>
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 flex items-center justify-center text-center p-2">
+          <p className="text-white text-base font-semibold z-10">No destination selected</p>
+        </div>
+      </>
+    )}
+  </div>
+);
+
 export const Card: FC<CardProps> = ({
   name,
-  image_urls,
-  owner_src,
+  imageUrls,
+  ownerSrc,
   onClick,
   menu,
   draggingDestinationId,
   destinationIds,
 }) => {
-  const count = image_urls.length;
-  const isAvailableToDrop =
-    destinationIds && draggingDestinationId
-      ? !destinationIds?.find((id) => id === draggingDestinationId)
-      : false;
+  const count = imageUrls.length;
+
+  const { canAcceptDrop } = useMemo(
+    () => ({
+      canAcceptDrop:
+        destinationIds && draggingDestinationId
+          ? !destinationIds.includes(draggingDestinationId)
+          : false,
+    }),
+    [destinationIds, draggingDestinationId]
+  );
 
   return (
-    <div className="relative flex flex-col space-y-2 cursor-pointer" onClick={onClick}>
+    <div
+      className="relative flex flex-col space-y-2 cursor-pointer"
+      aria-label={`View ${name}`}
+      onClick={onClick}
+    >
       <div className="relative aspect-video overflow-hidden rounded-xl">
-        {count > 0 ? (
-          image_urls.map((url, index) => {
-            const offsetPercent = 100 / count;
-            return (
-              <div
-                key={url + index}
-                style={{
-                  left: `${index * offsetPercent}%`,
-                  zIndex: index,
-                }}
-                className="absolute top-0 left-0 w-full h-full"
-              >
-                <Image
-                  src={url}
-                  alt={name}
-                  priority
-                  quality={50}
-                  fill
-                  sizes="33vw"
-                  className="object-cover rounded-xl"
-                />
-              </div>
-            );
-          })
-        ) : (
-          <div className="relative w-full h-full bg-gray-200">
-            <Image
-              src="/images/placeholder.webp"
-              alt={name}
-              fill
-              className="object-cover rounded-xl"
-              priority
-              sizes="33vw"
-            />
-            <div className="absolute inset-0 bg-black opacity-40 rounded-xl"></div>
-            <div className="absolute inset-0 flex text-center items-center justify-center p-4 text-white text-sm font-semibold z-10">
-              No destination selected
-            </div>
-          </div>
-        )}
+        {count > 0 ? <ImageGallery urls={imageUrls} /> : <EmptyState hideText={canAcceptDrop} />}
         {menu && <div className="absolute top-2 right-2">{menu}</div>}
-        {isAvailableToDrop && (
-          <div className="absolute flex inset-0 bg-black/50 text-white font-semibold items-center justify-center z-20">
-            DROP HERE
-          </div>
-        )}
+        {canAcceptDrop && <DropOverlay />}
       </div>
       <h4 className="truncate font-semibold">{name}</h4>
-      {owner_src && <UserIcon size="small" img_src={owner_src} />}
+      {ownerSrc && <UserIcon size="small" img_src={ownerSrc} />}
     </div>
   );
 };

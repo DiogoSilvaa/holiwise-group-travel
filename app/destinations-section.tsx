@@ -23,7 +23,7 @@ export const DestinationsSection: FC<DestinationsSectionProps> = ({
       <DraggableItem id={destination.id} key={destination.id}>
         <Card
           name={destination.name}
-          image_urls={[destination.image_url]}
+          imageUrls={[destination.image_url]}
           menu={
             <DestinationCardMenu
               id={destination.id}
