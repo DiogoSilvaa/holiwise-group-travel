@@ -77,7 +77,14 @@ const Home = () => {
               name={name}
               key={id}
               image_urls={[image_url]}
-              menu={<DestinationCardMenu id={id} onAddToTrip={onAddDestination} trips={trips} />}
+              menu={
+                <DestinationCardMenu
+                  id={id}
+                  name={name}
+                  onAddToTrip={onAddDestination}
+                  trips={trips}
+                />
+              }
             />
           ))}
         </div>

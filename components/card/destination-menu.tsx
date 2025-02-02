@@ -1,19 +1,31 @@
 import { FC } from "react";
+import { useMediaQuery } from "@react-hookz/web";
 import { Button } from "../button";
 import { ActionMenu } from "../action-menu/action-menu";
+import { ActionDialog } from "../action-dialog/action-dialog";
 import { Check, Plus } from "lucide-react";
 import { Trip } from "@/app/api/trips/types";
 
 interface DestinationCardMenuProps {
   id: string;
+  name: string;
   onAddToTrip: (tripId: string, destinationId: string) => void;
   trips: Trip[];
 }
 
-export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({ id, trips, onAddToTrip }) => {
+export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
+  id,
+  trips,
+  onAddToTrip,
+  name,
+}) => {
+  const isXL = useMediaQuery("(min-width: 1280px)");
+
+  const Component = isXL ? ActionDialog : ActionMenu;
+
   return (
-    <ActionMenu header="Lisbon, Portugal" description="Add this destination to your trips">
-      <div className="flex flex-col space-y-3 max-h-48 overflow-y-auto no-scrollbar">
+    <Component header={name} description="Add this destination to your trips">
+      <div className="flex flex-col space-y-3 max-h-48 overflow-y-auto no-scrollbar xl:mb-2">
         {trips.map((t) => {
           const isAlreadyInTrip = t.destinationIds.includes(id);
           return (
@@ -27,8 +39,7 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({ id, trips, o
                   className="flex justify-center text-base h-10 w-28 py-2 bg-primary-500"
                   onClick={() => onAddToTrip(t.id, id)}
                 >
-                  <Check className="stroke-[2.5px]" />
-                  Added
+                  <Check className="stroke-[2.5px]" /> Added
                 </Button>
               ) : (
                 <Button
@@ -36,14 +47,13 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({ id, trips, o
                   className="flex justify-center text-base h-10 w-28 py-2 bg-white"
                   onClick={() => onAddToTrip(t.id, id)}
                 >
-                  <Plus className="stroke-[2.5px]" />
-                  Add
+                  <Plus className="stroke-[2.5px]" /> Add
                 </Button>
               )}
             </div>
           );
         })}
       </div>
-    </ActionMenu>
+    </Component>
   );
 };

@@ -6,6 +6,8 @@ import { Input } from "../input";
 import { Trash } from "lucide-react";
 import { ActionMenu } from "../action-menu/action-menu";
 import { useAddTripAccess, useFetchTripAccess, useRemoveTripAccess } from "@/hooks/trip-access";
+import { useMediaQuery } from "@react-hookz/web";
+import { ActionDialog } from "../action-dialog/action-dialog";
 
 interface InviteDialogProps {
   tripId: string;
@@ -16,6 +18,9 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
   const { mutate: addUser } = useAddTripAccess();
   const { mutate: removeUser } = useRemoveTripAccess();
   const { data: users } = useFetchTripAccess(tripId);
+  const isXL = useMediaQuery("(min-width: 1280px)");
+  const Component = isXL ? ActionDialog : ActionMenu;
+
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -33,7 +38,7 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
   };
 
   return (
-    <ActionMenu
+    <Component
       header="Invite friends"
       description="Allow friends to collaborate with you."
       trigger={
@@ -75,6 +80,6 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
           )}
         </div>
       </div>
-    </ActionMenu>
+    </Component>
   );
 };

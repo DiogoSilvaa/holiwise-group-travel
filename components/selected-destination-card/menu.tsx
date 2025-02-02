@@ -6,6 +6,8 @@ import { Pin, PinOff, Trash } from "lucide-react";
 import { ActionMenu } from "../action-menu/action-menu";
 import { Destination } from "@/app/api/destinations/types";
 import { SheetClose } from "../sheet";
+import { useMediaQuery } from "@react-hookz/web";
+import { ActionDialog } from "../action-dialog/action-dialog";
 
 export type TripDestinationMenuProps =
   | {
@@ -30,8 +32,11 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
   onRemove,
   isSelected,
 }) => {
+  const isXL = useMediaQuery("(min-width: 1280px)");
+  const Component = isXL ? ActionDialog : ActionMenu;
+
   return (
-    <ActionMenu header={destination.name}>
+    <Component header={destination.name}>
       <div className="flex py-4 flex-col space-y-3">
         {isSelected ? (
           <SheetClose asChild>
@@ -67,6 +72,6 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
           </Button>
         </SheetClose>
       </div>
-    </ActionMenu>
+    </Component>
   );
 };
