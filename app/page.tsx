@@ -11,6 +11,7 @@ import { useFetchTrips } from "@/hooks/trip";
 import { DestinationCardMenu } from "@/components/card/destination-menu";
 import { useRouter } from "next/navigation";
 import { useAddTripDestination } from "@/hooks/trip-destination";
+import { GlobalLoading } from "./global-loading";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -27,7 +28,7 @@ const Home = () => {
   const router = useRouter();
   const [type, setType] = useState("all");
   if (!dests || !trips) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   const destinations =

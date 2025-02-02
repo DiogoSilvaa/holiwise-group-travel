@@ -4,8 +4,8 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/auth";
 import { Navbar } from "@/components/navbar/navbar";
 import { QueryProvider } from "@/contexts/query";
-import { ToastProvider } from "@/components/toast";
 import { Toaster } from "@/components/toaster";
+import { GlobalLoading } from "./global-loading";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -31,6 +31,7 @@ const RootLayout = ({
               <Navbar />
               <main className="flex-1 overflow-x-hidden  pt-6">{children}</main>
             </div>
+            <GlobalLoading />
             <Toaster />
           </QueryProvider>
         </AuthProvider>
