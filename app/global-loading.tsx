@@ -13,8 +13,8 @@ type LoadingControllerConfig = {
 
 const DEFAULT_CONFIG: LoadingControllerConfig = {
   showDelay: 200,
-  hideDelay: 1000,
-  animationDuration: 300,
+  hideDelay: 200,
+  animationDuration: 200,
 };
 
 const useQueryTracker = (queryClient: ReturnType<typeof useQueryClient>) => {
