@@ -71,17 +71,25 @@ const Home = () => {
           options={tripTypeOptions}
           setType={setTripStatus}
         />
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
-          {filteredTrips.map(({ id, ownerSrc, name, imageUrls }) => (
-            <Card
-              key={id}
-              name={name}
-              image_urls={imageUrls}
-              owner_src={ownerSrc}
-              onClick={() => router.push(`/trip/${id}`)}
-            />
-          ))}
-        </div>
+        {filteredTrips.length ? (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
+            {filteredTrips.map(({ id, ownerSrc, name, imageUrls }) => (
+              <Card
+                key={id}
+                name={name}
+                image_urls={imageUrls}
+                owner_src={ownerSrc}
+                onClick={() => router.push(`/trip/${id}`)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex w-full text-gray-500 justify-center items-center h-32">
+            {tripStatus === "all"
+              ? "You have no trips. Create one above."
+              : "You have no trips that match the current filter."}
+          </div>
+        )}
       </section>
       <section>
         <p className="font-bold text-2xl mb-2">My destinations</p>
@@ -90,24 +98,30 @@ const Home = () => {
           options={destinationTypeOptions}
           setType={setType}
         />
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
-          {destinations?.map(({ id, name, image_url }) => (
-            <Card
-              name={name}
-              key={id}
-              image_urls={[image_url]}
-              menu={
-                <DestinationCardMenu
-                  id={id}
-                  name={name}
-                  onAddToTrip={onAddDestination}
-                  onRemoveFromTrip={onRemoveDestination}
-                  trips={trips}
-                />
-              }
-            />
-          ))}
-        </div>
+        {destinations.length ? (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
+            {destinations?.map(({ id, name, image_url }) => (
+              <Card
+                name={name}
+                key={id}
+                image_urls={[image_url]}
+                menu={
+                  <DestinationCardMenu
+                    id={id}
+                    name={name}
+                    onAddToTrip={onAddDestination}
+                    onRemoveFromTrip={onRemoveDestination}
+                    trips={trips}
+                  />
+                }
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex w-full text-gray-500 justify-center items-center h-32">
+            You have no destinations that match the current filter.
+          </div>
+        )}
       </section>
     </div>
   );

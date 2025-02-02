@@ -33,7 +33,7 @@ export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
       : null;
 
   return (
-    <div className="flex flex-col space-y-9">
+    <div className="flex flex-col space-y-20">
       <div className="flex flex-col space-y-4">
         <div className="flex space-x-1">
           <div>
@@ -63,23 +63,29 @@ export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
       <div className="flex flex-col">
         <span>
           <h3 className="font-semibold">Ideas for destinations</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
-            {dests?.map((d) => {
-              if (d.id === selectedDestination?.id) {
-                return;
-              }
+          {dests?.length ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
+              {dests?.map((d) => {
+                if (d.id === selectedDestination?.id) {
+                  return;
+                }
 
-              return (
-                <SelectedDestinationCard
-                  key={d.id}
-                  destination={d}
-                  onSelect={onSelect}
-                  onRemove={onRemove}
-                  tripId={trip.id}
-                />
-              );
-            })}
-          </div>
+                return (
+                  <SelectedDestinationCard
+                    key={d.id}
+                    destination={d}
+                    onSelect={onSelect}
+                    onRemove={onRemove}
+                    tripId={trip.id}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div className="flex w-full text-gray-500 justify-center items-center h-32">
+              You have no destinations added to this trip.
+            </div>
+          )}
         </span>
       </div>
     </div>
