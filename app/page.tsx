@@ -60,11 +60,11 @@ const Home = () => {
           </CreateTripDialog>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
-          {trips?.map(({ id, ownerSrc, name }) => (
+          {trips?.map(({ id, ownerSrc, name, imageUrls }) => (
             <Card
               key={id}
               name={name}
-              image_src="/images/lisbon.webp"
+              image_urls={imageUrls}
               owner_src={ownerSrc}
               onClick={() => router.push(`/trip/${id}`)}
             />
@@ -83,7 +83,7 @@ const Home = () => {
             <Card
               name={name}
               key={id}
-              image_src={image_url}
+              image_urls={[image_url]}
               menu={
                 <DestinationCardMenu
                   id={id}

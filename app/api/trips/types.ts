@@ -2,7 +2,7 @@ export interface Trip {
   id: string;
   name: string;
   selectedDestinationId: string | null;
-  imageUrls: Array<string | null>;
+  imageUrls: Array<string>;
   destinationIds: Array<string>;
   ownerEmail: string;
   ownerSrc: string | null;

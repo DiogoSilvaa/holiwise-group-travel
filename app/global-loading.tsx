@@ -5,7 +5,6 @@ import { useIsFetching } from "@tanstack/react-query";
 import { Logo } from "@/components/icons/logo";
 
 export const GlobalLoading = () => {
-  const isTripsFetching = useIsFetching();
   const isFetching = useIsFetching();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -16,7 +15,7 @@ export const GlobalLoading = () => {
       const timeout = setTimeout(() => setIsVisible(false), 100);
       return () => clearTimeout(timeout);
     }
-  }, [isTripsFetching]);
+  }, [isFetching]);
 
   return (
     <div

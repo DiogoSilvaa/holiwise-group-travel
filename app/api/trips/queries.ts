@@ -42,9 +42,11 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
 
         if (trip.selected_destination_id) {
           if (trip.destination_id === trip.selected_destination_id) {
-            acc[trip.id].imageUrls = [trip.destination_image];
+            acc[trip.id].imageUrls = trip.destination_image
+              ? [trip.destination_image]
+              : [];
           }
-        } else {
+        } else if (trip.destination_image) {
           acc[trip.id].imageUrls.push(trip.destination_image);
         }
       }
