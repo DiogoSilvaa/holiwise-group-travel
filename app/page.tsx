@@ -12,8 +12,11 @@ import { useDragAndDrop } from "@/hooks/use-drag-drop";
 import { DESTINATION_FILTER_OPTIONS, TRIP_FILTER_OPTIONS } from "./filters";
 import { TripsSection } from "./trips-section";
 import { DestinationsSection } from "./destinations-section";
+import { useSession } from "next-auth/react";
+import { UserItem } from "@/components/navbar/user-item";
 
 const Home: FC = () => {
+  const { status } = useSession();
   const router = useRouter();
   const [typeFilter, setTypeFilter] = useState("all");
   const [tripStatusFilter, setTripStatusFilter] = useState("all");
@@ -26,6 +29,15 @@ const Home: FC = () => {
       addToTrip({ tripId, destinationId });
     }
   });
+
+  if (status === "unauthenticated")
+    return (
+      <div className="flex flex-col items-center justify-center w-full text-center mt-24 xl:mt-0 xl:h-screen px-20">
+        <h1 className="text-xl font-semibold">Welcome to Holiwise!</h1>
+        <h2 className="text-lg mb-10">Sign in to continue</h2>
+        <UserItem />
+      </div>
+    );
 
   if (!destinations || !trips) return null;
 

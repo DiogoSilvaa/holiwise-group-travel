@@ -40,7 +40,7 @@ export const UserItem: FC = () => {
   if (status === "unauthenticated" || !data?.user?.email || !data.user.image) {
     return (
       <Button
-        className="flex text-base items-center w-full h-12"
+        className="flex text-base items-center w-full max-w-72 h-12"
         variant="outline"
         onClick={() => signIn("google")}
       >
