@@ -4,6 +4,8 @@ import { ListChecks, MapPin, Bed, PlaneTakeoff, Calendar } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/tabs";
 import classNames from "classnames";
 import { DestinationsTab } from "./destinations-tab";
+import { CompleteTrip } from "@/app/api/trips/types";
+import { FC } from "react";
 
 interface TabConfig {
   value: string;
@@ -14,10 +16,10 @@ interface TabConfig {
 }
 
 interface TripTabsProps {
-  tripId: string;
+  trip: CompleteTrip;
 }
 
-const tabConfigs: (tripId: string) => TabConfig[] = (tripId) => [
+const tabConfigs: (trip: CompleteTrip) => TabConfig[] = (trip) => [
   {
     value: "overview",
     label: "Overview",
@@ -29,7 +31,7 @@ const tabConfigs: (tripId: string) => TabConfig[] = (tripId) => [
     value: "destinations",
     label: "Destinations",
     icon: <MapPin className="mr-1 stroke-[1.5px]" />,
-    content: <DestinationsTab />,
+    content: <DestinationsTab trip={trip} />,
     disabled: false,
   },
   {
@@ -55,8 +57,8 @@ const tabConfigs: (tripId: string) => TabConfig[] = (tripId) => [
   },
 ];
 
-export const TripTabs = ({ tripId }: TripTabsProps) => {
-  const tabs = tabConfigs(tripId);
+export const TripTabs: FC<TripTabsProps> = ({ trip }) => {
+  const tabs = tabConfigs(trip);
 
   return (
     <Tabs defaultValue="destinations">

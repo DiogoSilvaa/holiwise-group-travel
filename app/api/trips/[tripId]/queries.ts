@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { CompleteTrip } from "./types";
+import { CompleteTrip } from "../types";
 
 export const querySingleTrip = async (
   tripId: string,
@@ -33,7 +33,7 @@ export const querySingleTrip = async (
     imageUrls: trip.destination_image ? [trip.destination_image] : [],
     name: trip.name,
     ownerEmail: trip.email ?? "",
-    selectedDestination: trip.selected_destination_id,
+    selectedDestinationId: trip.selected_destination_id,
     start: trip.start_date,
     end: trip.end_date,
     emailsWithAccess: [],

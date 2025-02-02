@@ -1,7 +1,7 @@
 export interface Trip {
   id: string;
   name: string;
-  selectedDestination: string | undefined;
+  selectedDestinationId: string | null;
   imageUrls: Array<string | null>;
   ownerEmail: string;
 }
@@ -12,7 +12,7 @@ export interface CompleteTrip {
   start: Date | null;
   end: Date | null;
   emailsWithAccess: string[];
-  selectedDestination: string | null;
+  selectedDestinationId: string | null;
   imageUrls: Array<string>;
   ownerEmail: string;
 }
@@ -20,7 +20,7 @@ export interface CompleteTrip {
 export interface TripPayload {
   id?: string;
   name: string;
-  destinationId?: string;
+  destinationId?: string | null;
   date?: {
     start?: Date;
     end?: Date;

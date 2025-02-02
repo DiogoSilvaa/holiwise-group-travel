@@ -21,7 +21,7 @@ const TripPage = () => {
   return (
     <div className="container px-6 flex flex-col space-y-8">
       <TripHeader trip={trip} />
-      <TripTabs tripId={tripId} />
+      <TripTabs trip={trip} />
     </div>
   );
 };

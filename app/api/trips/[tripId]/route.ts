@@ -35,7 +35,6 @@ export const PATCH = async (
     await updateTrip(tripId, updates);
     return constructResponse({ success: true }, 200);
   } catch (error) {
-    console.log("test", error);
     return constructResponse({ error: "Update failed" }, 500);
   }
 };
