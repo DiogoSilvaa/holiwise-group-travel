@@ -94,11 +94,13 @@ const Home: FC = () => {
               </Button>
             </CreateTripDialog>
           </div>
-          <TypeSelect
-            defaultOption={defaultTripOption}
-            options={tripTypeOptions}
-            setType={setTripStatus}
-          />
+          <div className="max-w-28 h-12">
+            <TypeSelect
+              defaultOption={defaultTripOption}
+              options={tripTypeOptions}
+              setType={setTripStatus}
+            />
+          </div>
           {filteredTrips.length ? (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
               {filteredTrips.map(({ id, ownerSrc, name, imageUrls, destinationIds }) => (
@@ -124,11 +126,13 @@ const Home: FC = () => {
         </section>
         <section>
           <p className="font-bold text-2xl mb-2">My destinations</p>
-          <TypeSelect
-            defaultOption={defaultTypeOption}
-            options={destinationTypeOptions}
-            setType={setType}
-          />
+          <div className="max-w-40 h-12">
+            <TypeSelect
+              defaultOption={defaultTypeOption}
+              options={destinationTypeOptions}
+              setType={setType}
+            />
+          </div>
           {destinations.length ? (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
               {destinations?.map(({ id, name, image_url }) => (
