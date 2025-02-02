@@ -12,7 +12,6 @@ export interface CompleteTrip {
   name: string;
   start: Date | null;
   end: Date | null;
-  emailsWithAccess: string[];
   selectedDestinationId: string | null;
   imageUrls: Array<string>;
   ownerEmail: string;

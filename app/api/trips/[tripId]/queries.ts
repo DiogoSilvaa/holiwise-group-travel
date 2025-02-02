@@ -46,7 +46,6 @@ export const querySingleTrip = async (
     selectedDestinationId: trip.selected_destination_id || null,
     start: trip.start_date,
     end: trip.end_date,
-    emailsWithAccess: [], // Still needs separate query
   };
 
   return formattedTrip;

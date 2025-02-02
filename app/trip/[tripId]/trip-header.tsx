@@ -6,12 +6,14 @@ import { Button } from "@/components/button";
 import { format } from "date-fns";
 import { EditTripDialog } from "@/components/trip-dialog/edit-trip-dialog";
 import { CompleteTrip } from "@/app/api/trips/types";
+import { InviteDialog } from "@/components/invite-dialog/invite-dialog";
 
 export interface TripHeaderProps {
   trip: CompleteTrip;
+  isOwner: boolean;
 }
 
-export const TripHeader = ({ trip }: TripHeaderProps) => {
+export const TripHeader = ({ trip, isOwner }: TripHeaderProps) => {
   const { start, end, name } = trip;
   const startDate = start ? new Date(start) : null;
   const endDate = end ? new Date(end) : null;
@@ -22,13 +24,16 @@ export const TripHeader = ({ trip }: TripHeaderProps) => {
 
   return (
     <div className="text-center truncate">
-      <Link href="/" passHref>
-        <ArrowLeft className="cursor-pointer" />
-      </Link>
-      <div className="flex items-center justify-center space-x-2 mt-4">
+      <div className="flex justify-between items-center">
+        <Link href="/" passHref>
+          <ArrowLeft className="cursor-pointer" />
+        </Link>
+        {isOwner && <InviteDialog tripId={trip.id} />}
+      </div>
+      <div className="flex items-center justify-center space-x-2 mt-8">
         <h1 className="text-2xl font-bold">{name}</h1>
         <EditTripDialog trip={trip}>
-          <Button variant="outline" className="w-8 h-8">
+          <Button variant="outline" className="w-10 h-10">
             <Pencil />
           </Button>
         </EditTripDialog>

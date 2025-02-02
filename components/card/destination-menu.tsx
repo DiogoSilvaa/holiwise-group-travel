@@ -27,12 +27,12 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
           return (
             <div key={t.id} className="flex items-stretch space-x-3">
               <div className="bg-gray-200 rounded-md flex items-center flex-1 pl-4">
-                <span>{t.name}</span>
+                <span className="truncate">{t.name}</span>
               </div>
               {isAlreadyInTrip ? (
                 <Button
                   variant="outline"
-                  className="flex justify-start text-base h-10 py-2 px-4 bg-primary-500"
+                  className="flex justify-center text-base h-10 w-28 py-2 bg-primary-500"
                   onClick={() => onAddToTrip(t.id, id)}
                 >
                   <Check className="stroke-[2.5px]" />
@@ -41,7 +41,7 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
               ) : (
                 <Button
                   variant="outline"
-                  className="flex justify-start text-base h-10 py-2 px-4 bg-white"
+                  className="flex justify-center text-base h-10 w-28 py-2 bg-white"
                   onClick={() => onAddToTrip(t.id, id)}
                 >
                   <Plus className="stroke-[2.5px]" />

@@ -18,12 +18,16 @@ interface ActionMenuProps {
   children: ReactNode;
   header: string;
   description?: string;
+  trigger?: ReactNode;
+  closeText?: string;
 }
 
 export const ActionMenu: FC<ActionMenuProps> = ({
   children,
   header,
   description,
+  trigger,
+  closeText,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -41,14 +45,18 @@ export const ActionMenu: FC<ActionMenuProps> = ({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
-          className="bg-white text-gray-700 p-2 h-9 w-9 rounded-md shadow hover:shadow-md transition"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <MoreVertical size={20} />
-        </Button>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button
+            className="bg-white text-gray-700 p-2 h-9 w-9 rounded-md shadow hover:shadow-md transition"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <MoreVertical size={20} />
+          </Button>
+        )}
       </SheetTrigger>
-      <SheetContent side="bottom" className="sm:max-w-lg p-0">
+      <SheetContent side="bottom" className="sm:max-w-lg p-0 rounded-xl">
         <motion.div
           className="w-12 h-1.5 bg-gray-300 rounded-full my-2 mx-auto cursor-grab"
           drag="y"
@@ -57,8 +65,8 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           whileDrag={{ cursor: "grabbing" }}
         />
         <div className="py-4 px-8">
-          <SheetHeader className="text-lg mb-4 font-semibold text-start">
-            <SheetTitle>{header}</SheetTitle>
+          <SheetHeader className="mb-4 font-semibold text-start">
+            <SheetTitle className="text-xl">{header}</SheetTitle>
             <SheetDescription>{description}</SheetDescription>
           </SheetHeader>
           {children}
@@ -67,7 +75,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
               variant="outline"
               className="mt-4 h-12 w-full text-black text-base"
             >
-              Close
+              {closeText ? closeText : "Close"}
             </Button>
           </SheetClose>
         </div>

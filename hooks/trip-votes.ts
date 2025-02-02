@@ -50,7 +50,6 @@ export const useToggleTripVote = () => {
       return await toggleTripVote(fullPayload);
     },
     onMutate: async (payload) => {
-      // You may cancel queries and snapshot previous vote data.
       const queryKey = [
         "tripVotes",
         payload.tripId,
