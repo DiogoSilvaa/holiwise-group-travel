@@ -1,93 +1,54 @@
 "use client";
-import { DndContext, DragEndEvent, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
-
-import { Card } from "@/components/card/card";
-import { TypeSelect } from "@/components/type-select/type-select";
 import { FC, useState } from "react";
+import { useRouter } from "next/navigation";
+import { DndContext } from "@dnd-kit/core";
+import { useFetchDestinations } from "@/hooks/destination";
+import { CreateTripDialog } from "@/components/trip-dialog/create-trip-dialog";
 import { Button } from "@/components/button";
 import { Plus } from "lucide-react";
-import { CreateTripDialog } from "@/components/trip-dialog/create-trip-dialog";
-import { useFetchDestinations } from "@/hooks/destination";
-import { useFetchTrips } from "@/hooks/trip";
-import { DestinationCardMenu } from "@/components/card/destination-menu";
-import { useRouter } from "next/navigation";
-import { useAddTripDestination, useRemoveTripDestination } from "@/hooks/trip-destination";
-import { DroppableItem } from "@/components/droppable-item/droppable-item";
-import { DraggableItem } from "@/components/draggable-item/draggable-item";
-import { activationConstraint } from "@/components/draggable-item/sensor-delay";
-
-const destinationTypeOptions = [
-  { value: "beach", text: "Beach destinations" },
-  { value: "city", text: "City destinations" },
-  { value: "ski", text: "Ski destinations" },
-];
-
-const tripTypeOptions = [
-  { value: "archived", text: "Archived trips" },
-  { value: "active", text: "Active trips" },
-];
-
-const defaultTripOption = { value: "all", text: "All trips" };
-
-const defaultTypeOption = { value: "all", text: "All destinations" };
+import { TypeSelect } from "@/components/type-select/type-select";
+import { useTripManagement } from "@/hooks/use-trip-management";
+import { useDragAndDrop } from "@/hooks/use-drag-drop";
+import { DESTINATION_FILTER_OPTIONS, TRIP_FILTER_OPTIONS } from "./filters";
+import { TripsSection } from "./trips-section";
+import { DestinationsSection } from "./destinations-section";
 
 const Home: FC = () => {
-  const { data: dests } = useFetchDestinations();
-  const { data: trips } = useFetchTrips();
-  const { mutate: addToTrip } = useAddTripDestination();
-  const { mutate: removeFromTrip } = useRemoveTripDestination();
-  const [draggingId, setDraggingId] = useState<string | null>(null);
   const router = useRouter();
-  const [type, setType] = useState("all");
-  const [tripStatus, setTripStatus] = useState("all");
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint,
-    })
-  );
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [tripStatusFilter, setTripStatusFilter] = useState("all");
 
-  if (!dests || !trips) {
-    return null;
-  }
-
-  const destinations = type === "all" ? dests : dests.filter((d) => d.type === type);
-  const filteredTrips = tripStatus === "all" ? trips : trips.filter((t) => t.status === tripStatus);
-  const onAddDestination = (tripId: string, destinationId: string) => {
-    return addToTrip({ tripId, destinationId });
-  };
-
-  const onRemoveDestination = (tripId: string, destinationId: string) => {
-    return removeFromTrip({ tripId, destinationId });
-  };
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { over: trip, active: destination } = event;
-    setDraggingId(null);
-    if (trip && destination) {
-      const fullTrip = trips.find((t) => t.id === trip.id);
-      const canDrop = !fullTrip?.destinationIds.includes(String(destination?.id));
-
-      if (canDrop) onAddDestination(String(trip.id), String(destination.id));
+  const { data: destinations } = useFetchDestinations();
+  const { trips, addToTrip, removeFromTrip } = useTripManagement();
+  const { sensors, draggingId, ...dragHandlers } = useDragAndDrop((tripId, destinationId) => {
+    const trip = trips?.find((t) => t.id === tripId);
+    if (trip && !trip.destinationIds.includes(destinationId)) {
+      addToTrip({ tripId, destinationId });
     }
-  };
+  });
+
+  if (!destinations || !trips) return null;
+
+  const filteredTrips =
+    tripStatusFilter === "all" ? trips : trips.filter((t) => t.status === tripStatusFilter);
+
+  const filteredDestinations =
+    typeFilter === "all" ? destinations : destinations.filter((d) => d.type === typeFilter);
 
   return (
-    <DndContext
-      onDragEnd={handleDragEnd}
-      onDragStart={(e) => setDraggingId(String(e.active.id))}
-      onDragCancel={() => setDraggingId(null)}
-      sensors={sensors}
-    >
+    <DndContext {...dragHandlers} sensors={sensors}>
       <div className="container max-h-full overflow-y-hidden px-6 lg:px-28 flex flex-col space-y-12 pb-10 lg:pb-28 xl:pt-16">
-        <div className="text-center">
+        <header className="text-center">
           <h1 className="text-4xl font-bold">My trips</h1>
           <h2 className="mt-3.5 text-gray-800/65">
             Organise all your travel planning in one place
           </h2>
-        </div>
+        </header>
+
         <section>
           <div className="flex space-x-4 items-center mb-2">
-            <p className="font-bold text-2xl">My trips</p>
-            <CreateTripDialog destinations={dests ?? []}>
+            <h3 className="font-bold text-2xl">My trips</h3>
+            <CreateTripDialog destinations={destinations}>
               <Button variant="outline" className="h-10 w-24 bg-gray-50 rounded-md">
                 <Plus />
                 <span>Create</span>
@@ -96,72 +57,56 @@ const Home: FC = () => {
           </div>
           <div className="w-fit h-12">
             <TypeSelect
-              defaultOption={defaultTripOption}
-              options={tripTypeOptions}
-              setType={setTripStatus}
+              defaultOption={TRIP_FILTER_OPTIONS[0]}
+              options={TRIP_FILTER_OPTIONS.slice(1)}
+              setType={setTripStatusFilter}
             />
           </div>
           {filteredTrips.length ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
-              {filteredTrips.map(({ id, ownerSrc, name, imageUrls, destinationIds }) => (
-                <DroppableItem id={id} key={id}>
-                  <Card
-                    name={name}
-                    image_urls={imageUrls}
-                    owner_src={ownerSrc}
-                    onClick={() => router.push(`/trip/${id}`)}
-                    draggingDestinationId={draggingId}
-                    destinationIds={destinationIds}
-                  />
-                </DroppableItem>
-              ))}
-            </div>
+            <TripsSection
+              trips={filteredTrips}
+              draggingId={draggingId}
+              onTripClick={(id: string) => router.push(`/trip/${id}`)}
+            />
           ) : (
-            <div className="flex w-full text-gray-500 justify-center items-center h-32">
-              {tripStatus === "all"
-                ? "You have no trips. Create one above."
-                : "You have no trips that match the current filter."}
-            </div>
+            <EmptyState
+              message={
+                tripStatusFilter === "all"
+                  ? "You have no trips. Create one above."
+                  : "No trips match the current filter."
+              }
+            />
           )}
         </section>
         <section>
-          <p className="font-bold text-2xl mb-2">My destinations</p>
+          <h3 className="font-bold text-2xl mb-2">My destinations</h3>
           <div className="w-fit h-12">
             <TypeSelect
-              defaultOption={defaultTypeOption}
-              options={destinationTypeOptions}
-              setType={setType}
+              defaultOption={DESTINATION_FILTER_OPTIONS[0]}
+              options={DESTINATION_FILTER_OPTIONS.slice(1)}
+              setType={setTypeFilter}
             />
           </div>
-          {destinations.length ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
-              {destinations?.map(({ id, name, image_url }) => (
-                <DraggableItem id={id} key={id}>
-                  <Card
-                    name={name}
-                    image_urls={[image_url]}
-                    menu={
-                      <DestinationCardMenu
-                        id={id}
-                        name={name}
-                        onAddToTrip={onAddDestination}
-                        onRemoveFromTrip={onRemoveDestination}
-                        trips={trips}
-                      />
-                    }
-                  />
-                </DraggableItem>
-              ))}
-            </div>
+          {filteredDestinations.length ? (
+            <DestinationsSection
+              destinations={filteredDestinations}
+              trips={trips}
+              onAddDestination={(tripId, destinationId) => addToTrip({ tripId, destinationId })}
+              onRemoveDestination={(tripId, destinationId) =>
+                removeFromTrip({ tripId, destinationId })
+              }
+            />
           ) : (
-            <div className="flex w-full text-gray-500 justify-center items-center h-32">
-              You have no destinations that match the current filter.
-            </div>
+            <EmptyState message="No destinations match the current filter." />
           )}
         </section>
       </div>
     </DndContext>
   );
 };
+
+const EmptyState: FC<{ message: string }> = ({ message }) => (
+  <div className="flex w-full text-gray-500 justify-center items-center h-32">{message}</div>
+);
 
 export default Home;
