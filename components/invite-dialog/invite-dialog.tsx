@@ -56,7 +56,11 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
             placeholder="Enter email"
             className="flex-1 h-10"
           />
-          <Button onClick={addEmail} className="bg-primary-500 text-black h-10" variant="default">
+          <Button
+            onClick={addEmail}
+            className="bg-primary-500 text-black h-10 hover:bg-primary-500"
+            variant="default"
+          >
             Invite
           </Button>
         </div>

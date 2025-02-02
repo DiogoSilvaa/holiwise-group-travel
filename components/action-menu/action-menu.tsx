@@ -59,7 +59,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
         className="w-full p-0 rounded-t-xl"
       >
         <motion.div
-          className="flex justify-center items-center w-full h-10 rounded-full mx-auto cursor-grab"
+          className="flex justify-center items-center w-full h-12 rounded-full mx-auto cursor-grab"
           drag="y"
           dragConstraints={{ top: 0, bottom: 0 }}
           onDragEnd={handleDragEnd}
@@ -68,8 +68,8 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           <div className="bg-gray-300 w-40 h-2 rounded-md"></div>
         </motion.div>
         <div className="py-4 px-8 lg:px-36">
-          <SheetHeader className="mb-4 font-semibold text-start">
-            <SheetTitle className="text-xl">{header}</SheetTitle>
+          <SheetHeader className="mb-4 text-start">
+            <SheetTitle className="text-xl  font-semibold">{header}</SheetTitle>
             <SheetDescription>{description}</SheetDescription>
           </SheetHeader>
           {children}

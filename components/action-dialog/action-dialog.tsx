@@ -47,8 +47,8 @@ export const ActionDialog: FC<ActionDialogProps> = ({
         className="w-full p-0 rounded-t-xl"
       >
         <div className="py-4 px-8 flex flex-col space-y-2">
-          <DialogHeader className="mb-4 font-semibold text-start">
-            <DialogTitle className="text-xl">{header}</DialogTitle>
+          <DialogHeader className="mb-4 text-start">
+            <DialogTitle className="text-xl font-semibold">{header}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           {children}
