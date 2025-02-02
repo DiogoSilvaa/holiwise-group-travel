@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   return (
-    <div className="container px-6 lg:px-28 flex flex-col space-y-12 pb-10 lg:pb-28">
+    <div className="container px-6 lg:px-28 flex flex-col space-y-12 pb-10 lg:pb-28 xl:pt-16">
       <div className="text-center">
         <h1 className="text-4xl font-bold">My trips</h1>
         <h2 className="mt-3.5 text-gray-800/65">Organise all your travel planning in one place</h2>
