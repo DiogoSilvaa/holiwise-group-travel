@@ -1,6 +1,7 @@
 import { CompleteTrip, Trip, TripPayload } from "@/app/api/trips/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useToast } from "./use-toast";
 
 const createTrip = async (tripData: TripPayload) => {
   const res = await fetch("/api/trips", {
@@ -57,6 +58,7 @@ export const useFetchTrips = () => {
 
 export const useCreateTrip = () => {
   const { data: session } = useSession();
+  const { toast } = useToast();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -66,8 +68,19 @@ export const useCreateTrip = () => {
       }
       return await createTrip({ ...tripData, userId: session.user.id });
     },
-    onSuccess: () => {
+    onSuccess: (_, trip) => {
       queryClient.invalidateQueries({ queryKey: ["trips"] });
+      toast({
+        title: "Trip Created",
+        description: `Your trip "${trip.name}" was successfully created.`,
+      });
+    },
+    onError: (_, trip) => {
+      toast({
+        variant: "destructive",
+        title: "Trip Creation Failed",
+        description: `There was a problem creating your trip "${trip.name}". Please try again later.`,
+      });
     },
   });
 };
@@ -92,6 +105,8 @@ export const useFetchTrip = (tripId: string) => {
 export const useUpdateTrip = () => {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+
   return useMutation({
     mutationFn: async (patchData: Partial<TripPayload> & { id: string }) => {
       if (!session?.user?.id) {
@@ -111,10 +126,21 @@ export const useUpdateTrip = () => {
       }));
       return { previousTrip };
     },
+    onSuccess: () => {
+      toast({
+        title: "Trip Updated",
+        description: `Your trip was successfully updated.`,
+      });
+    },
     onError: (_, patchData, context) => {
       if (context?.previousTrip) {
         queryClient.setQueryData(["trip", patchData.id], context.previousTrip);
       }
+      toast({
+        variant: "destructive",
+        title: "Trip Update Failed",
+        description: `There was a problem updating your trip. Please try again later.`,
+      });
     },
     onSettled: (data, err, patchData) => {
       queryClient.invalidateQueries({ queryKey: ["trip", patchData.id] });
@@ -125,6 +151,7 @@ export const useUpdateTrip = () => {
 
 export const useDeleteTrip = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (tripId: string) => {
@@ -145,6 +172,19 @@ export const useDeleteTrip = () => {
       if (context?.previousTrips) {
         queryClient.setQueryData<Trip[]>(["trips"], context.previousTrips);
       }
+      toast({
+        variant: "destructive",
+        title: "Trip Deletion Failed",
+        description: `There was a problem deleting your trip. Please try again later.`,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["trips"] });
+      toast({
+        title: "Trip Deleted",
+        description: `Your trip has been successfully deleted.`,
+        variant: "default",
+      });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["trips"] });

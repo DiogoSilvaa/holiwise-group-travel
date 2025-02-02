@@ -1,6 +1,5 @@
 import { TripDestinationPayload } from "@/app/api/trip-destination/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 
 const addTripDestination = async (payload: TripDestinationPayload) => {
   const res = await fetch("/api/trip-destination", {
