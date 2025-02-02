@@ -1,26 +1,24 @@
 import classNames from "classnames";
 import { FC } from "react";
-import { Person } from "../icons/person";
+import Image from "next/image";
 
 interface UserIconProps {
-  email?: string;
   size?: "small" | "normal";
+  img_src: string;
 }
 
-export const UserIcon: FC<UserIconProps> = ({ email, size = "normal" }) => {
-  const isUnknownUser = !email;
-  const firstLetter = email?.[0].toUpperCase();
+export const UserIcon: FC<UserIconProps> = ({ size = "normal", img_src }) => {
   return (
-    <span
-      className={classNames(
-        "bg-purple-700 inline-flex justify-center items-center rounded-lg font-medium",
-        size === "normal" ? "h-12 w-12 text-2xl" : "h-8 w-8 text-base",
-        isUnknownUser
-          ? "bg-transparent border border-gray-300"
-          : "bg-purple-700 text-white"
+    <div className="min-w-fit">
+      {img_src && (
+        <Image
+          className="rounded-lg"
+          src={img_src}
+          alt="user profile picture"
+          width={size === "normal" ? 48 : 24}
+          height={size === "normal" ? 48 : 24}
+        />
       )}
-    >
-      {isUnknownUser ? <Person /> : firstLetter}
-    </span>
+    </div>
   );
 };

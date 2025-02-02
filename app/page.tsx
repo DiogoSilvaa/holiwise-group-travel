@@ -3,7 +3,7 @@
 import { Card } from "@/components/card/card";
 import { TypeSelect } from "@/components/type-select/type-select";
 import { useState } from "react";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button";
 import { Plus } from "lucide-react";
 import { CreateTripDialog } from "@/components/trip-dialog/create-trip-dialog";
 import { useFetchDestinations } from "@/hooks/destination";
@@ -50,10 +50,12 @@ const Home = () => {
           <p className="font-bold text-2xl">My trips</p>
           <CreateTripDialog destinations={dests ?? []}>
             <Button
-              icon={<Plus size={14} />}
-              text="Create"
+              variant="outline"
               className="h-10 w-24 bg-gray-50 rounded-md"
-            />
+            >
+              <Plus />
+              <span>Create</span>
+            </Button>
           </CreateTripDialog>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">

@@ -8,13 +8,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../dropdown-menu";
-import { Exit } from "../icons/exit";
-import { Person } from "../icons/person";
-import { Booking } from "../icons/booking";
-import { Cog } from "../icons/cog";
 import classNames from "classnames";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Button } from "../button/button";
+import { Button } from "../button";
+import Image from "next/image";
+import { Briefcase, CogIcon, LogOut, User } from "lucide-react";
 
 interface DropdownItemProps {
   icon: ReactNode;
@@ -29,51 +27,73 @@ const DropdownItem: FC<DropdownItemProps> = ({
   isDisabled,
   onClick,
 }) => (
-  <button onClick={onClick}>
-    <DropdownMenuItem
-      className={classNames(
-        "text-base",
-        isDisabled
-          ? "text-gray-500 cursor-not-allowed pointer-events-none"
-          : "bg-transparent"
-      )}
-    >
-      {icon}
-      {text}
-    </DropdownMenuItem>
-  </button>
+  <DropdownMenuItem
+    onClick={onClick}
+    className={classNames(
+      "text-base hover:bg-gray-100 h-11",
+      isDisabled
+        ? "text-gray-500 cursor-not-allowed pointer-events-none"
+        : "cursor-pointer"
+    )}
+  >
+    {icon}
+    {text}
+  </DropdownMenuItem>
 );
 
 export const UserItem: FC = () => {
   const { status, data } = useSession();
 
-  if (status === "unauthenticated" || !data?.user?.email) {
+  if (status === "unauthenticated" || !data?.user?.email || !data.user.image) {
     return (
       <Button
-        className="flex items-center space-x-3 w-full"
+        className="flex text-base items-center w-full h-12"
+        variant="outline"
         onClick={() => signIn("google")}
-        icon={<UserIcon />}
-        text="Log in"
-      />
+      >
+        <Image
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          alt="Google Icon"
+          width={24}
+          height={24}
+        />
+        <span>Sign in with Google</span>
+      </Button>
     );
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div>
-          <Button
-            className="flex items-center space-x-3 w-full border-none"
-            icon={<UserIcon email={data.user.email} />}
-            text={data.user.email}
-          />
-        </div>
+        <Button
+          className="flex justify-start space-x-1 w-full h-fit"
+          variant="ghost"
+        >
+          <UserIcon img_src={data.user.image} />
+          <span className="truncate">{data.user.email}</span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col truncate w-64 space-y-1">
-        <DropdownItem icon={<Person />} text="Profile" isDisabled />
-        <DropdownItem icon={<Booking />} text="Manage booking" isDisabled />
-        <DropdownItem icon={<Cog />} text="Account settings" isDisabled />
-        <DropdownItem icon={<Exit />} text="Log out" onClick={signOut} />
+        <DropdownItem
+          icon={<User strokeWidth="1" />}
+          text="Profile"
+          isDisabled
+        />
+        <DropdownItem
+          icon={<Briefcase strokeWidth="1" />}
+          text="Manage booking"
+          isDisabled
+        />
+        <DropdownItem
+          icon={<CogIcon strokeWidth="1" />}
+          text="Account settings"
+          isDisabled
+        />
+        <DropdownItem
+          icon={<LogOut strokeWidth="1" />}
+          text="Log out"
+          onClick={signOut}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );
