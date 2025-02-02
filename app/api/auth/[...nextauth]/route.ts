@@ -3,7 +3,7 @@ import { KyselyAdapter } from "@auth/kysely-adapter";
 import NextAuth, { Session, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,

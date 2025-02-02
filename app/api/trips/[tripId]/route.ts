@@ -2,7 +2,7 @@ import { constructResponse } from "../../helpers";
 import { deleteTrip, updateTrip } from "./mutations";
 import { querySingleTrip } from "./queries";
 
-export const GET = async (req: Request, { params }: { params: { tripId: string } }) => {
+export const GET = async (req: Request, { params }: { params: Promise<{ tripId: string }> }) => {
   const { tripId } = await params;
   const userId = new URL(req.url).searchParams.get("userId");
 
@@ -21,7 +21,7 @@ export const GET = async (req: Request, { params }: { params: { tripId: string }
   }
 };
 
-export const PATCH = async (req: Request, { params }: { params: { tripId: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ tripId: string }> }) => {
   const { tripId } = await params;
   const updates = await req.json();
 
@@ -33,7 +33,7 @@ export const PATCH = async (req: Request, { params }: { params: { tripId: string
   }
 };
 
-export const DELETE = async (req: Request, { params }: { params: { tripId: string } }) => {
+export const DELETE = async (req: Request, { params }: { params: Promise<{ tripId: string }> }) => {
   const { tripId } = await params;
 
   try {
