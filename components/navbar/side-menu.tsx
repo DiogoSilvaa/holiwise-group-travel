@@ -58,7 +58,7 @@ export const SideMenu: FC<SideMenuProps> = ({ isSideOpen, closeSide }) => {
             />
           </li>
         </ul>
-        <div className="px-4 pb-8">
+        <div className="flex justify-center items-center px-4 pb-8">
           <UserItem />
         </div>
       </div>
