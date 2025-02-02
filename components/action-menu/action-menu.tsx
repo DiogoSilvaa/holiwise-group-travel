@@ -74,7 +74,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           </SheetHeader>
           {children}
           <SheetClose asChild>
-            <Button variant="outline" className="mt-4 h-12 w-full text-black text-base">
+            <Button variant="outline" className="mt-6 h-12 w-full text-black text-base">
               {closeText ? closeText : "Close"}
             </Button>
           </SheetClose>
