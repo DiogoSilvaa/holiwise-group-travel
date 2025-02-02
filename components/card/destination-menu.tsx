@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useMediaQuery } from "@react-hookz/web";
 import { Button } from "../button";
 import { ActionMenu } from "../action-menu/action-menu";
 import { ActionDialog } from "../action-dialog/action-dialog";

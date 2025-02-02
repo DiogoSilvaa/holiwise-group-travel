@@ -6,7 +6,6 @@ import { Input } from "../input";
 import { Trash } from "lucide-react";
 import { ActionMenu } from "../action-menu/action-menu";
 import { useAddTripAccess, useFetchTripAccess, useRemoveTripAccess } from "@/hooks/trip-access";
-import { useMediaQuery } from "@react-hookz/web";
 import { ActionDialog } from "../action-dialog/action-dialog";
 import { useXlViewport } from "@/hooks/use-xl-viewport";
 

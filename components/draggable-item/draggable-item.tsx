@@ -1,6 +1,5 @@
 import { FC, ReactNode } from "react";
 import { useDraggable } from "@dnd-kit/core";
-import { useMediaQuery } from "@react-hookz/web";
 import { useXlViewport } from "@/hooks/use-xl-viewport";
 
 interface DraggableItemProps {
