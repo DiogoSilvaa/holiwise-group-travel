@@ -8,10 +8,24 @@ interface CardProps {
   owner_src?: string | null;
   onClick?: () => void;
   menu?: ReactNode;
+  draggingDestinationId?: string | null;
+  destinationIds?: string[];
 }
 
-export const Card: FC<CardProps> = ({ name, image_urls, owner_src, onClick, menu }) => {
+export const Card: FC<CardProps> = ({
+  name,
+  image_urls,
+  owner_src,
+  onClick,
+  menu,
+  draggingDestinationId,
+  destinationIds,
+}) => {
   const count = image_urls.length;
+  const isAvailableToDrop =
+    destinationIds && draggingDestinationId
+      ? !destinationIds?.find((id) => id === draggingDestinationId)
+      : false;
 
   return (
     <div className="relative flex flex-col space-y-2 cursor-pointer" onClick={onClick}>
@@ -55,6 +69,11 @@ export const Card: FC<CardProps> = ({ name, image_urls, owner_src, onClick, menu
           </div>
         )}
         {menu && <div className="absolute top-2 right-2">{menu}</div>}
+        {isAvailableToDrop && (
+          <div className="absolute flex inset-0 bg-black/50 text-white font-semibold items-center justify-center z-20">
+            DROP HERE
+          </div>
+        )}
       </div>
       <h4 className="truncate font-semibold">{name}</h4>
       {owner_src && <UserIcon size="small" img_src={owner_src} />}
