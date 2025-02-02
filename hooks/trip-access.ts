@@ -41,8 +41,8 @@ export const useAddTripAccess = () => {
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to add user. Please try again.",
+        title: "Adding user failed",
+        description: "User does not exist. Please add an existing user's email.",
         variant: "destructive",
       });
     },
