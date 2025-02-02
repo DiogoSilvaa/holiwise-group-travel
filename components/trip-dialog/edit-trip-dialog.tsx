@@ -102,6 +102,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
                 variant="outline"
                 className="flex-1 h-12"
                 onClick={handleArchiveTrip}
+                disabled={trip.status === "archived"}
               >
                 <Archive />
                 Archive Trip
