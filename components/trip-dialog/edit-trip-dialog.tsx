@@ -129,7 +129,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
               <Button
                 type="submit"
                 variant="default"
-                className="flex-1 h-12 bg-primary-500 text-black"
+                className="flex-1 h-12 bg-primary-500 text-black hover:bg-primary-500"
                 disabled={!form.formState.isValid}
               >
                 Save
