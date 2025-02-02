@@ -15,6 +15,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
       "t.id",
       "t.name",
       "u.email",
+      "u.image",
       "d.id as destination_id",
       "d.image_url as destination_image",
       "t.selected_destination_id",
@@ -32,6 +33,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
           selectedDestinationId: trip.selected_destination_id,
           imageUrls: [],
           destinationIds: [],
+          ownerSrc: trip.image,
         };
       }
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 interface CardProps {
   name: string;
   image_src: string;
-  owner_email?: string;
+  owner_src?: string | null;
   onClick?: () => void;
   menu?: ReactNode;
 }
@@ -13,7 +13,7 @@ interface CardProps {
 export const Card: FC<CardProps> = ({
   name,
   image_src,
-  owner_email,
+  owner_src,
   onClick,
   menu,
 }) => {
@@ -33,7 +33,7 @@ export const Card: FC<CardProps> = ({
         {menu && <div className="absolute top-2 right-2 ">{menu}</div>}
       </div>
       <h4 className="truncate font-semibold">{name}</h4>
-      {owner_email && <UserIcon size="small" email={owner_email} />}
+      {owner_src && <UserIcon size="small" img_src={owner_src} />}
     </div>
   );
 };

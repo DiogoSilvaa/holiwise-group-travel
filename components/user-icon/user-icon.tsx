@@ -10,15 +10,13 @@ interface UserIconProps {
 export const UserIcon: FC<UserIconProps> = ({ size = "normal", img_src }) => {
   return (
     <div className="min-w-fit">
-      {img_src && (
-        <Image
-          className="rounded-lg"
-          src={img_src}
-          alt="user profile picture"
-          width={size === "normal" ? 48 : 24}
-          height={size === "normal" ? 48 : 24}
-        />
-      )}
+      <Image
+        className="rounded-lg"
+        src={img_src}
+        alt="user profile picture"
+        width={size === "normal" ? 48 : 28}
+        height={size === "normal" ? 48 : 28}
+      />
     </div>
   );
 };

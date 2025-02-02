@@ -5,6 +5,7 @@ export interface Trip {
   imageUrls: Array<string | null>;
   destinationIds: Array<string>;
   ownerEmail: string;
+  ownerSrc: string | null;
 }
 
 export interface CompleteTrip {

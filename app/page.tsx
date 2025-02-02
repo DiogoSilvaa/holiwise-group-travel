@@ -59,12 +59,12 @@ const Home = () => {
           </CreateTripDialog>
         </div>
         <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
-          {trips?.map(({ id, ownerEmail, name }) => (
+          {trips?.map(({ id, ownerSrc, name }) => (
             <Card
               key={id}
               name={name}
               image_src="/images/lisbon.webp"
-              owner_email={ownerEmail}
+              owner_src={ownerSrc}
               onClick={() => router.push(`/trip/${id}`)}
             />
           ))}

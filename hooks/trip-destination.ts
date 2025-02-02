@@ -56,6 +56,9 @@ export const useRemoveTripDestination = () => {
       await queryClient.invalidateQueries({
         queryKey: ["trip", payload.tripId],
       });
+      await queryClient.invalidateQueries({
+        queryKey: ["destinations", payload.tripId],
+      });
     },
   });
 };
