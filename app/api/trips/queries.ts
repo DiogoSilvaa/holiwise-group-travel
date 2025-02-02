@@ -19,7 +19,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
       "t.selected_destination_id",
       "t.status",
     ])
-    .orderBy("t.created_at")
+    .orderBy("t.created_at desc")
     .execute();
 
   const formattedTrips: Trip[] = Object.values(
