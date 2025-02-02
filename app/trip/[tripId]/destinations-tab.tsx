@@ -2,10 +2,7 @@ import { CompleteTrip } from "@/app/api/trips/types";
 import { SelectedDestinationCard } from "@/components/selected-destination-card/selected-destination-card";
 import { useFetchDestinations } from "@/hooks/destination";
 import { useUpdateTrip } from "@/hooks/trip";
-import {
-  useAddTripDestination,
-  useRemoveTripDestination,
-} from "@/hooks/trip-destination";
+import { useRemoveTripDestination } from "@/hooks/trip-destination";
 import { MapPin } from "lucide-react";
 import { FC } from "react";
 
@@ -59,6 +56,7 @@ export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
             key={selectedDestination.id}
             destination={selectedDestination}
             onDeselect={onDeselect}
+            onRemove={onRemove}
           />
         )}
       </div>

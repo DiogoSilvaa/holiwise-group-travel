@@ -5,13 +5,14 @@ import { Button } from "../button";
 import { Pin, PinOff, Trash } from "lucide-react";
 import { ActionMenu } from "../action-menu/action-menu";
 import { Destination } from "@/app/api/destinations/types";
+import { SheetClose } from "../sheet";
 
 export type TripDestinationMenuProps =
   | {
       destination: Destination;
       isSelected: true;
       onDeselect: (id: string) => void;
-      onRemove?: never;
+      onRemove: (id: string) => void;
       onSelect?: never;
     }
   | {
@@ -33,7 +34,7 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
     <ActionMenu header={destination.name}>
       <div className="flex py-4 flex-col space-y-3">
         {isSelected ? (
-          <>
+          <SheetClose asChild>
             <Button
               variant="secondary"
               className="w-full flex justify-start text-base h-10 py-2 px-4"
@@ -42,9 +43,9 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
               <PinOff />
               Unselect as destination
             </Button>
-          </>
+          </SheetClose>
         ) : (
-          <>
+          <SheetClose asChild>
             <Button
               variant="secondary"
               className="w-full flex justify-start text-base h-10 py-2 px-4"
@@ -53,16 +54,18 @@ export const TripDestinationMenu: FC<TripDestinationMenuProps> = ({
               <Pin />
               Select as destination
             </Button>
-            <Button
-              variant="secondary"
-              className="w-full flex justify-start text-base h-10 py-2 px-4 text-red-600"
-              onClick={() => onRemove(destination.id)}
-            >
-              <Trash />
-              Remove from trip
-            </Button>
-          </>
+          </SheetClose>
         )}
+        <SheetClose asChild>
+          <Button
+            variant="secondary"
+            className="w-full flex justify-start text-base h-10 py-2 px-4 text-red-600"
+            onClick={() => onRemove(destination.id)}
+          >
+            <Trash />
+            Remove from trip
+          </Button>
+        </SheetClose>
       </div>
     </ActionMenu>
   );

@@ -10,7 +10,7 @@ export type SelectedDestinationCardProps =
       destination: Destination;
       isSelected: true;
       onDeselect: (id: string) => void;
-      onRemove?: never;
+      onRemove: (id: string) => void;
       onSelect?: never;
     }
   | {
