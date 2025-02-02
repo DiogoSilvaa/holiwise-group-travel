@@ -3,6 +3,7 @@ export interface Trip {
   name: string;
   selectedDestinationId: string | null;
   imageUrls: Array<string | null>;
+  destinationIds: Array<string>;
   ownerEmail: string;
 }
 

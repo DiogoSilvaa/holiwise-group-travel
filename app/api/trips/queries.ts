@@ -31,15 +31,18 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
           ownerEmail: trip.email ?? "",
           selectedDestinationId: trip.selected_destination_id,
           imageUrls: [],
+          destinationIds: [],
         };
       }
 
-      if (trip.selected_destination_id) {
-        if (trip.destination_id === trip.selected_destination_id) {
-          acc[trip.id].imageUrls = [trip.destination_image];
-        }
-      } else {
-        if (trip.destination_id) {
+      if (trip.destination_id) {
+        acc[trip.id].destinationIds.push(trip.destination_id);
+
+        if (trip.selected_destination_id) {
+          if (trip.destination_id === trip.selected_destination_id) {
+            acc[trip.id].imageUrls = [trip.destination_image];
+          }
+        } else {
           acc[trip.id].imageUrls.push(trip.destination_image);
         }
       }

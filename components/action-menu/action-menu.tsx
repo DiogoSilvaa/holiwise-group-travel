@@ -11,14 +11,20 @@ import {
   SheetHeader,
   SheetTitle,
   SheetClose,
+  SheetDescription,
 } from "../sheet";
 
 interface ActionMenuProps {
   children: ReactNode;
   header: string;
+  description?: string;
 }
 
-export const ActionMenu: FC<ActionMenuProps> = ({ children, header }) => {
+export const ActionMenu: FC<ActionMenuProps> = ({
+  children,
+  header,
+  description,
+}) => {
   const [open, setOpen] = useState(false);
 
   const DRAG_CLOSE_THRESHOLD = 50;
@@ -53,6 +59,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({ children, header }) => {
         <div className="py-4 px-8">
           <SheetHeader className="text-lg mb-4 font-semibold text-start">
             <SheetTitle>{header}</SheetTitle>
+            <SheetDescription>{description}</SheetDescription>
           </SheetHeader>
           {children}
           <SheetClose asChild>

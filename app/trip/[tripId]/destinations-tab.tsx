@@ -11,7 +11,7 @@ interface DestinationsTabProps {
 }
 
 export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
-  const { data: dests } = useFetchDestinations();
+  const { data: dests } = useFetchDestinations(trip.id);
   const { mutate: updateTrip } = useUpdateTrip();
   const { mutate: removeDestination } = useRemoveTripDestination();
 

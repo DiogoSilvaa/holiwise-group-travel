@@ -85,7 +85,7 @@ export const useFetchTrip = (tripId: string) => {
       }
       return await res.json();
     },
-    enabled: status !== "loading" && !!session?.user?.id && Boolean(tripId),
+    enabled: status !== "loading" && !!session?.user?.id && !!tripId,
   });
 };
 

@@ -10,6 +10,7 @@ import { useFetchDestinations } from "@/hooks/destination";
 import { useFetchTrips } from "@/hooks/trip";
 import { DestinationCardMenu } from "@/components/card/destination-menu";
 import { useRouter } from "next/navigation";
+import { useAddTripDestination } from "@/hooks/trip-destination";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -22,10 +23,19 @@ const defaultTypeOption = { value: "all", text: "All destinations" };
 const Home = () => {
   const { data: dests } = useFetchDestinations();
   const { data: trips } = useFetchTrips();
+  const { mutate: addToTrip } = useAddTripDestination();
   const router = useRouter();
   const [type, setType] = useState("all");
+  if (!dests || !trips) {
+    return <div>Loading...</div>;
+  }
+
   const destinations =
     type === "all" ? dests : dests?.filter((d) => d.type === type);
+
+  const onAddDestination = (tripId: string, destinationId: string) => {
+    return addToTrip({ tripId, destinationId });
+  };
 
   return (
     <div className="container px-6 flex flex-col space-y-8">
@@ -73,8 +83,9 @@ const Home = () => {
               image_src={image_url}
               menu={
                 <DestinationCardMenu
-                  onAddToTrip={() => {}}
-                  trips={trips ?? []}
+                  id={id}
+                  onAddToTrip={onAddDestination}
+                  trips={trips}
                 />
               }
             />

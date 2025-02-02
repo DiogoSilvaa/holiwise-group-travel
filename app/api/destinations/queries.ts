@@ -8,7 +8,7 @@ export const queryAllDestinations = async (
   if (tripId) {
     query = query
       .leftJoin("trip_destination as td", "td.destination_id", "d.id")
-      .where("td.trip_id", "ilike", tripId);
+      .where("td.trip_id", "=", tripId);
   }
   return query.execute();
 };
