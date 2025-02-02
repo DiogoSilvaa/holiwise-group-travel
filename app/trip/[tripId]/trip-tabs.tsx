@@ -62,7 +62,7 @@ export const TripTabs: FC<TripTabsProps> = ({ trip }) => {
 
   return (
     <Tabs defaultValue="destinations">
-      <div className="overflow-x-auto no-scrollbar w-full border-b border-gray-400 bg-white">
+      <div className="overflow-x-auto overflow-y-hidden no-scrollbar w-full border-b border-gray-400 bg-white">
         <TabsList className="flex gap-8 min-w-max bg-transparent">
           {tabs.map((tab) => (
             <TabsTrigger

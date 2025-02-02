@@ -17,7 +17,7 @@ export const GlobalLoading = () => {
       const timeout = setTimeout(() => setIsVisible(false), 500);
       return () => clearTimeout(timeout);
     }
-  }, [isFetching]);
+  }, [isFetching, isFirstLoad]);
 
   return (
     <div

@@ -35,14 +35,17 @@ export const ActionDialog: FC<ActionDialogProps> = ({
           trigger
         ) : (
           <Button
-            className="bg-white text-gray-700 p-2 h-9 w-9 rounded-md shadow hover:shadow-md transition"
+            className="bg-white hover:bg-white hover:text-gray-700 text-gray-700 p-2 h-9 w-9 rounded-md shadow hover:shadow-md transition"
             onClick={(e) => e.stopPropagation()}
           >
             <MoreVertical size={20} />
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="w-full p-0 rounded-t-xl">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="w-full p-0 rounded-t-xl"
+      >
         <div className="py-4 px-8 flex flex-col space-y-2">
           <DialogHeader className="mb-4 font-semibold text-start">
             <DialogTitle className="text-xl">{header}</DialogTitle>

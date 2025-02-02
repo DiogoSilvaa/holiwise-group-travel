@@ -17,6 +17,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
       "d.id as destination_id",
       "d.image_url as destination_image",
       "t.selected_destination_id",
+      "t.status",
     ])
     .orderBy("t.created_at")
     .execute();
@@ -33,6 +34,7 @@ export const queryAllTrips = async (userId: string): Promise<Trip[]> => {
             imageUrls: [],
             destinationIds: [],
             ownerSrc: trip.image,
+            status: trip.status,
           };
         }
 

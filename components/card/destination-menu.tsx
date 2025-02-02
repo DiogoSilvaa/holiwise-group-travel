@@ -10,6 +10,7 @@ interface DestinationCardMenuProps {
   id: string;
   name: string;
   onAddToTrip: (tripId: string, destinationId: string) => void;
+  onRemoveFromTrip: (tripId: string, destinationId: string) => void;
   trips: Trip[];
 }
 
@@ -17,6 +18,7 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
   id,
   trips,
   onAddToTrip,
+  onRemoveFromTrip,
   name,
 }) => {
   const isXL = useMediaQuery("(min-width: 1280px)");
@@ -36,15 +38,15 @@ export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
               {isAlreadyInTrip ? (
                 <Button
                   variant="outline"
-                  className="flex justify-center text-base h-10 w-28 py-2 bg-primary-500"
-                  onClick={() => onAddToTrip(t.id, id)}
+                  className="flex justify-center text-base h-10 w-28 py-2 hover:bg-primary-500 bg-primary-500"
+                  onClick={() => onRemoveFromTrip(t.id, id)}
                 >
                   <Check className="stroke-[2.5px]" /> Added
                 </Button>
               ) : (
                 <Button
                   variant="outline"
-                  className="flex justify-center text-base h-10 w-28 py-2 bg-white"
+                  className="flex justify-center text-base h-10 w-28 py-2 hover:bg-white lg:hover:bg-gray-200 bg-white"
                   onClick={() => onAddToTrip(t.id, id)}
                 >
                   <Plus className="stroke-[2.5px]" /> Add

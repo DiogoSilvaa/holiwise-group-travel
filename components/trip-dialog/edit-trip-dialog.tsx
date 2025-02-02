@@ -82,7 +82,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
   return (
     <Dialog open={open} onOpenChange={onDialogOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-11/12 rounded-lg">
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className="w-11/12 rounded-lg">
         <DialogHeader>
           <DialogTitle>Edit your trip</DialogTitle>
         </DialogHeader>

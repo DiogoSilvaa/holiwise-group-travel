@@ -55,10 +55,18 @@ export const CreateTripDialog: FC<CreateTripDialogProps> = ({ children, destinat
     form.reset();
   };
 
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+
+    if (!open) {
+      form.reset();
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-11/12 rounded-lg">
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className="w-11/12 rounded-lg">
         <DialogHeader>
           <DialogTitle>Create new trip</DialogTitle>
         </DialogHeader>

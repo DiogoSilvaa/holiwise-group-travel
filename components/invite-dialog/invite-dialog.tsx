@@ -40,7 +40,7 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
   return (
     <Component
       header="Invite friends"
-      description="Allow friends to collaborate with you."
+      description="Invite friends with existing accounts to collaborate with you."
       trigger={
         <Button variant="outline" className="w-28 h-11">
           Invite friends

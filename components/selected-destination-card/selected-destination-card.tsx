@@ -56,7 +56,7 @@ export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (props)
       </div>
       <div className="mt-1 space-y-2 flex justify-between">
         <h4 className="text-base font-semibold truncate">{name}</h4>
-        <Button variant="outline" className="w-14" onClick={toggleVote}>
+        <Button variant="outline" className="w-14 hover:bg-white" onClick={toggleVote}>
           <div className="flex items-center justify-center space-x-1">
             <ArrowBigUpIcon className={classNames(voteResult?.hasVoted ? "fill-black" : "")} />
             <span className="relative bottom-[0.5px]">{voteResult?.totalVotes}</span>

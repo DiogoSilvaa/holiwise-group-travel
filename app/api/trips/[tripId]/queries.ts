@@ -18,6 +18,7 @@ export const querySingleTrip = async (
       "t.name",
       "u.email",
       "t.selected_destination_id",
+      "t.status",
     ])
     .executeTakeFirst();
 
@@ -44,6 +45,7 @@ export const querySingleTrip = async (
     selectedDestinationId: trip.selected_destination_id || null,
     start: trip.start_date,
     end: trip.end_date,
+    status: trip.status,
   };
 
   return formattedTrip;

@@ -6,6 +6,7 @@ export interface Trip {
   destinationIds: Array<string>;
   ownerEmail: string;
   ownerSrc: string | null;
+  status: string | null;
 }
 
 export interface CompleteTrip {
@@ -16,6 +17,7 @@ export interface CompleteTrip {
   selectedDestinationId: string | null;
   imageUrls: Array<string>;
   ownerEmail: string;
+  status: string | null;
 }
 
 export interface TripPayload {

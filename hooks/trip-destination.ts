@@ -1,5 +1,6 @@
 import { TripDestinationPayload } from "@/app/api/trip-destination/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "./use-toast";
 
 const addTripDestination = async (payload: TripDestinationPayload) => {
   const res = await fetch("/api/trip-destination", {
@@ -45,9 +46,9 @@ const removeTripDestinationApi = async (payload: TripDestinationPayload) => {
   return res.json();
 };
 
-export const useRemoveTripDestination = () => {
+export const useRemoveTripDestination = (showToast?: boolean) => {
   const queryClient = useQueryClient();
-
+  const { toast } = useToast();
   return useMutation({
     mutationFn: async (payload: TripDestinationPayload) => await removeTripDestinationApi(payload),
     onSuccess: async (_, payload) => {
@@ -58,6 +59,12 @@ export const useRemoveTripDestination = () => {
       await queryClient.invalidateQueries({
         queryKey: ["destinations", payload.tripId],
       });
+      if (showToast) {
+        toast({
+          title: "Destination removed",
+          description: "The destination has been removed with success.",
+        });
+      }
     },
   });
 };
