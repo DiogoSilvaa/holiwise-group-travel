@@ -15,8 +15,8 @@ interface InviteDialogProps {
 
 export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
   const [email, setEmail] = useState<string>("");
-  const { mutate: addUser } = useAddTripAccess();
-  const { mutate: removeUser } = useRemoveTripAccess();
+  const { mutate: addUser, isPending: isAdding } = useAddTripAccess();
+  const { mutate: removeUser, isPending: isRemoving } = useRemoveTripAccess();
   const { data: users } = useFetchTripAccess(tripId);
   const { isXl } = useXlViewport();
   const Component = isXl ? ActionDialog : ActionMenu;
@@ -60,8 +60,10 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
             onClick={addEmail}
             className="bg-primary-500 text-black h-10 hover:bg-primary-500"
             variant="default"
+            aria-label="Email address to invite"
+            disabled={isAdding}
           >
-            Invite
+            {isAdding ? "Inviting..." : "Invite"}
           </Button>
         </div>
         <div>
@@ -78,6 +80,8 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
                       variant="ghost"
                       className="p-4 hover:bg-white"
                       onClick={() => removeEmail(e)}
+                      aria-label={`Remove ${e} from access list`}
+                      disabled={isRemoving}
                     >
                       <Trash size={16} className="text-red-500" />
                     </Button>

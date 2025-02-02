@@ -34,7 +34,7 @@ export const DatePicker = ({
         )}
       </Button>
     </PopoverTrigger>
-    <PopoverContent className="w-auto p-0">
+    <PopoverContent side="bottom" align="center" className="w-auto p-0">
       <Calendar
         mode="range"
         selected={{ from: value.start, to: value.end }}
