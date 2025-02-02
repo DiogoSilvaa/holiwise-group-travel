@@ -1,9 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  TripAccessPayload,
-  TripAccessResult,
-  TripAllowedUsers,
-} from "@/app/api/trip-access/types";
+import { TripAccessPayload, TripAccessResult, TripAllowedUsers } from "@/app/api/trip-access/types";
 import { useToast } from "./use-toast";
 
 const addTripAccessApi = async (payload: TripAccessPayload) => {

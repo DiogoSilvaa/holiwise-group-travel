@@ -8,12 +8,7 @@ interface MenuItemProps {
   isDisabled?: boolean;
 }
 
-export const MenuItem: FC<MenuItemProps> = ({
-  icon,
-  text,
-  isActive,
-  isDisabled,
-}) => {
+export const MenuItem: FC<MenuItemProps> = ({ icon, text, isActive, isDisabled }) => {
   return (
     <a
       href=""

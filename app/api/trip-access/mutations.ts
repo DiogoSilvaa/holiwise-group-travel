@@ -1,9 +1,7 @@
 import { db } from "@/lib/db";
 import { TripAccessPayload, TripAccessResult } from "./types";
 
-export const addTripAccess = async (
-  payload: TripAccessPayload
-): Promise<TripAccessResult> => {
+export const addTripAccess = async (payload: TripAccessPayload): Promise<TripAccessResult> => {
   const { tripId, email } = payload;
 
   const user = await db
@@ -31,9 +29,7 @@ export const addTripAccess = async (
   };
 };
 
-export const removeTripAccess = async (
-  payload: TripAccessPayload
-): Promise<TripAccessResult> => {
+export const removeTripAccess = async (payload: TripAccessPayload): Promise<TripAccessResult> => {
   const { tripId, email } = payload;
 
   const user = await db

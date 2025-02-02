@@ -33,10 +33,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
 
   const DRAG_CLOSE_THRESHOLD = 50;
 
-  const handleDragEnd = (
-    event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.y > DRAG_CLOSE_THRESHOLD) {
       setOpen(false);
     }
@@ -71,10 +68,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           </SheetHeader>
           {children}
           <SheetClose asChild>
-            <Button
-              variant="outline"
-              className="mt-4 h-12 w-full text-black text-base"
-            >
+            <Button variant="outline" className="mt-4 h-12 w-full text-black text-base">
               {closeText ? closeText : "Close"}
             </Button>
           </SheetClose>

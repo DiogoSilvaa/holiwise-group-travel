@@ -5,11 +5,7 @@ import { Button } from "../button";
 import { Input } from "../input";
 import { Trash } from "lucide-react";
 import { ActionMenu } from "../action-menu/action-menu";
-import {
-  useAddTripAccess,
-  useFetchTripAccess,
-  useRemoveTripAccess,
-} from "@/hooks/trip-access";
+import { useAddTripAccess, useFetchTripAccess, useRemoveTripAccess } from "@/hooks/trip-access";
 
 interface InviteDialogProps {
   tripId: string;
@@ -23,7 +19,7 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  users;
+
   const addEmail = () => {
     const trimmed = email.trim();
     if (trimmed && !users?.allowedEmails.includes(trimmed)) {
@@ -55,11 +51,7 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
             placeholder="Enter email"
             className="flex-1 h-10"
           />
-          <Button
-            onClick={addEmail}
-            className="bg-primary-500 text-black h-10"
-            variant="default"
-          >
+          <Button onClick={addEmail} className="bg-primary-500 text-black h-10" variant="default">
             Invite
           </Button>
         </div>
@@ -71,16 +63,9 @@ export const InviteDialog: FC<InviteDialogProps> = ({ tripId }) => {
             <div className="min-h-32 h-32 overflow-y-auto no-scrollbar">
               <ul className="space-y-1">
                 {users?.allowedEmails.map((e, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between text-sm"
-                  >
+                  <li key={index} className="flex items-center justify-between text-sm">
                     <span>{e}</span>
-                    <Button
-                      variant="ghost"
-                      className="p-1"
-                      onClick={() => removeEmail(e)}
-                    >
+                    <Button variant="ghost" className="p-1" onClick={() => removeEmail(e)}>
                       <Trash size={16} className="text-red-500" />
                     </Button>
                   </li>

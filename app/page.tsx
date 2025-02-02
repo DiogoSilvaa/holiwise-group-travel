@@ -11,7 +11,6 @@ import { useFetchTrips } from "@/hooks/trip";
 import { DestinationCardMenu } from "@/components/card/destination-menu";
 import { useRouter } from "next/navigation";
 import { useAddTripDestination } from "@/hooks/trip-destination";
-import { GlobalLoading } from "./global-loading";
 
 const destinationTypeOptions = [
   { value: "beach", text: "Beach destinations" },
@@ -31,8 +30,7 @@ const Home = () => {
     return null;
   }
 
-  const destinations =
-    type === "all" ? dests : dests?.filter((d) => d.type === type);
+  const destinations = type === "all" ? dests : dests?.filter((d) => d.type === type);
 
   const onAddDestination = (tripId: string, destinationId: string) => {
     return addToTrip({ tripId, destinationId });
@@ -42,18 +40,13 @@ const Home = () => {
     <div className="container px-6 flex flex-col space-y-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold">My trips</h1>
-        <h2 className="mt-3.5 text-gray-800/65">
-          Organise all your travel planning in one place
-        </h2>
+        <h2 className="mt-3.5 text-gray-800/65">Organise all your travel planning in one place</h2>
       </div>
       <section>
         <div className="flex space-x-4 items-center">
           <p className="font-bold text-2xl">My trips</p>
           <CreateTripDialog destinations={dests ?? []}>
-            <Button
-              variant="outline"
-              className="h-10 w-24 bg-gray-50 rounded-md"
-            >
+            <Button variant="outline" className="h-10 w-24 bg-gray-50 rounded-md">
               <Plus />
               <span>Create</span>
             </Button>
@@ -84,13 +77,7 @@ const Home = () => {
               name={name}
               key={id}
               image_urls={[image_url]}
-              menu={
-                <DestinationCardMenu
-                  id={id}
-                  onAddToTrip={onAddDestination}
-                  trips={trips}
-                />
-              }
+              menu={<DestinationCardMenu id={id} onAddToTrip={onAddDestination} trips={trips} />}
             />
           ))}
         </div>

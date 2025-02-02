@@ -3,7 +3,6 @@ import { SelectedDestinationCard } from "@/components/selected-destination-card/
 import { useFetchDestinations } from "@/hooks/destination";
 import { useUpdateTrip } from "@/hooks/trip";
 import { useRemoveTripDestination } from "@/hooks/trip-destination";
-import { useFetchTripVotes } from "@/hooks/trip-votes";
 import { MapPin } from "lucide-react";
 import { FC } from "react";
 
@@ -44,9 +43,8 @@ export const DestinationsTab: FC<DestinationsTabProps> = ({ trip }) => {
             <h2 className="text-lg font-semibold">You are going to</h2>
             {!selectedDestination && (
               <p className="text-sm">
-                No destination selected yet. Select one of your shortlisted
-                destinations as the final one for this trip and it will be
-                pinned here.
+                No destination selected yet. Select one of your shortlisted destinations as the
+                final one for this trip and it will be pinned here.
               </p>
             )}
           </span>

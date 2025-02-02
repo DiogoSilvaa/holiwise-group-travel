@@ -1,9 +1,7 @@
 import { db } from "@/lib/db";
 import { Destination } from "./types";
 
-export const queryAllDestinations = async (
-  tripId: string | null
-): Promise<Destination[]> => {
+export const queryAllDestinations = async (tripId: string | null): Promise<Destination[]> => {
   let query = db.selectFrom("destination as d").selectAll();
   if (tripId) {
     query = query

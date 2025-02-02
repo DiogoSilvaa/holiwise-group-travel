@@ -74,8 +74,7 @@ export const TripTabs: FC<TripTabsProps> = ({ trip }) => {
               <div
                 className={classNames(
                   "flex items-center justify-center px-3",
-                  !tab.disabled &&
-                    "border-b-[5px] border-primary-500 pb-2 border-"
+                  !tab.disabled && "border-b-[5px] border-primary-500 pb-2 border-"
                 )}
               >
                 {tab.icon}
@@ -86,11 +85,7 @@ export const TripTabs: FC<TripTabsProps> = ({ trip }) => {
         </TabsList>
       </div>
       {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="bg-white pt-4"
-        >
+        <TabsContent key={tab.value} value={tab.value} className="bg-white pt-4">
           {tab.content}
         </TabsContent>
       ))}

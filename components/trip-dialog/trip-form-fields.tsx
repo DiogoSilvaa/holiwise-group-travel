@@ -6,9 +6,11 @@ import { Input } from "../input";
 import { Label } from "../label";
 import { DatePicker } from "./date-picker";
 import { DateRange } from "./types";
+import { Control } from "react-hook-form";
+import { TripPayload } from "@/app/api/trips/types";
 
 interface TripFormFieldsProps {
-  control: any;
+  control: Control<TripPayload>;
   tempDates: DateRange | undefined;
   setTempDates: (dates: DateRange | undefined) => void;
   isCalendarOpen: boolean;
@@ -29,15 +31,11 @@ export const TripFormFields: FC<TripFormFieldsProps> = ({
       <FormField
         control={control}
         name="name"
-        render={({ field }: any) => (
+        render={({ field }) => (
           <FormItem className="space-y-1">
             <Label>Name</Label>
             <FormControl>
-              <Input
-                {...field}
-                placeholder="Enter trip name"
-                className="h-11 text-sm"
-              />
+              <Input {...field} placeholder="Enter trip name" className="h-11 text-sm" />
             </FormControl>
             <FormMessage />
           </FormItem>

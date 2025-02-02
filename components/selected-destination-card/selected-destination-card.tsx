@@ -25,27 +25,18 @@ export type SelectedDestinationCardProps =
       onDeselect?: never;
     };
 
-export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (
-  props
-) => {
+export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (props) => {
   const { image_url, name } = props.destination;
   const { data: voteResult } = useFetchTripVotes({
     tripId: props.tripId,
     destinationId: props.destination.id,
   });
   const { mutate } = useToggleTripVote();
-  const toggleVote = () =>
-    mutate({ tripId: props.tripId, destinationId: props.destination.id });
+  const toggleVote = () => mutate({ tripId: props.tripId, destinationId: props.destination.id });
   return (
     <div className="p-3 border border-gray-200 rounded-lg">
       <div className="relative">
-        <Image
-          src={image_url}
-          alt={name}
-          width={512}
-          height={360}
-          className="rounded-xl"
-        />
+        <Image src={image_url} alt={name} width={512} height={360} className="rounded-xl" />
         <div className="absolute top-2 right-2 ">
           <TripDestinationMenu {...props} />
         </div>
@@ -61,12 +52,8 @@ export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (
           <h4 className="text-base font-semibold">{name}</h4>
           <Button variant="outline" className="w-14" onClick={toggleVote}>
             <div className="flex text-center items-center space-x-1">
-              <ArrowBigUpIcon
-                className={classNames(voteResult?.hasVoted ? "fill-black" : "")}
-              />
-              <span className="relative bottom-[0.5px]">
-                {voteResult?.totalVotes}
-              </span>
+              <ArrowBigUpIcon className={classNames(voteResult?.hasVoted ? "fill-black" : "")} />
+              <span className="relative bottom-[0.5px]">{voteResult?.totalVotes}</span>
             </div>
           </Button>
         </div>

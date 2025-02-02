@@ -21,10 +21,7 @@ const toggleTripVote = async (payload: TripVotePayload) => {
   return res.json() as Promise<TripVoteResult>;
 };
 
-const fetchTripVote = async (
-  params: UseTripVoteQueryParams,
-  userId: string
-) => {
+const fetchTripVote = async (params: UseTripVoteQueryParams, userId: string) => {
   const res = await fetch(
     `/api/trip-votes?tripId=${params.tripId}&destinationId=${params.destinationId}&userId=${userId}`
   );
@@ -50,12 +47,7 @@ export const useToggleTripVote = () => {
       return await toggleTripVote(fullPayload);
     },
     onMutate: async (payload) => {
-      const queryKey = [
-        "tripVotes",
-        payload.tripId,
-        payload.destinationId,
-        session?.user?.id,
-      ];
+      const queryKey = ["tripVotes", payload.tripId, payload.destinationId, session?.user?.id];
       await queryClient.cancelQueries({ queryKey });
       const previousVote = queryClient.getQueryData<TripVoteResult>(queryKey);
       if (previousVote) {
@@ -69,23 +61,13 @@ export const useToggleTripVote = () => {
       return { previousVote };
     },
     onError: (err, payload, context) => {
-      const queryKey = [
-        "tripVotes",
-        payload.tripId,
-        payload.destinationId,
-        session?.user?.id,
-      ];
+      const queryKey = ["tripVotes", payload.tripId, payload.destinationId, session?.user?.id];
       if (context?.previousVote) {
         queryClient.setQueryData(queryKey, context.previousVote);
       }
     },
     onSettled: (data, err, payload) => {
-      const queryKey = [
-        "tripVotes",
-        payload.tripId,
-        payload.destinationId,
-        session?.user?.id,
-      ];
+      const queryKey = ["tripVotes", payload.tripId, payload.destinationId, session?.user?.id];
       queryClient.invalidateQueries({ queryKey });
     },
   });

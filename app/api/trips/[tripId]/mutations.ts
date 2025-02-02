@@ -1,10 +1,7 @@
 import { db } from "@/lib/db";
 import { TripPayload } from "../types";
 
-export const updateTrip = async (
-  tripId: string,
-  trip: Partial<TripPayload>
-) => {
+export const updateTrip = async (tripId: string, trip: Partial<TripPayload>) => {
   const { name, date, destinationId, status } = trip;
 
   const mappedTrip = {
@@ -17,11 +14,7 @@ export const updateTrip = async (
     ...(status !== undefined && { status }),
   };
 
-  await db
-    .updateTable("trip")
-    .set(mappedTrip)
-    .where("id", "=", tripId)
-    .execute();
+  await db.updateTable("trip").set(mappedTrip).where("id", "=", tripId).execute();
 };
 
 export const deleteTrip = async (tripId: string) => {

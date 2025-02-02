@@ -1,11 +1,5 @@
 import { FC } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
 
 interface SelectOption {
   value: string;
@@ -32,10 +26,7 @@ export const TypeSelect: FC<TypeSelectProps> = ({
       </SelectTrigger>
       <SelectContent>
         {includeDefault && (
-          <SelectItem
-            key={defaultOption.text + defaultOption.value}
-            value={defaultOption.value}
-          >
+          <SelectItem key={defaultOption.text + defaultOption.value} value={defaultOption.value}>
             {defaultOption.text}
           </SelectItem>
         )}

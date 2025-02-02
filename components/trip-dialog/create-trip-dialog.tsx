@@ -2,15 +2,8 @@
 
 import { FC, ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../dialog";
 import { Form, FormField } from "../form";
 import { Button } from "../button";
 import { TripFormFields } from "./trip-form-fields";
@@ -26,17 +19,9 @@ interface CreateTripDialogProps {
   destinations: Destination[];
 }
 
-export const CreateTripDialog: FC<CreateTripDialogProps> = ({
-  children,
-  destinations,
-}) => {
-  const {
-    isCalendarOpen,
-    tempDates,
-    setTempDates,
-    handleCalendarOpenChange,
-    handleCancelDates,
-  } = useDatepicker();
+export const CreateTripDialog: FC<CreateTripDialogProps> = ({ children, destinations }) => {
+  const { isCalendarOpen, tempDates, setTempDates, handleCalendarOpenChange, handleCancelDates } =
+    useDatepicker();
   const { mutate } = useCreateTrip();
 
   const form = useForm<TripPayload>({
@@ -78,10 +63,7 @@ export const CreateTripDialog: FC<CreateTripDialogProps> = ({
           <DialogTitle>Create new trip</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form
-            className="flex flex-col space-y-6"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+          <form className="flex flex-col space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <TripFormFields
               control={form.control}
               tempDates={tempDates}
@@ -93,11 +75,9 @@ export const CreateTripDialog: FC<CreateTripDialogProps> = ({
             <FormField
               control={form.control}
               name="destinationId"
-              render={({ field }: any) => (
+              render={({ field }) => (
                 <div className="space-y-1">
-                  <label className="block text-sm font-medium">
-                    Destination (optional)
-                  </label>
+                  <label className="block text-sm font-medium">Destination (optional)</label>
                   <DestinationInput field={field} options={destinations} />
                 </div>
               )}

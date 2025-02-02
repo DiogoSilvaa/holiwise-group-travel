@@ -1,4 +1,4 @@
-export const constructResponse = (body: any, status = 200) =>
+export const constructResponse = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
   });

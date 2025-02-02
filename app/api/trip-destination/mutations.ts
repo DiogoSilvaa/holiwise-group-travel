@@ -1,9 +1,6 @@
 import { db } from "@/lib/db";
 
-export const addTripDestination = async (
-  tripId: string,
-  destinationId: string
-) => {
+export const addTripDestination = async (tripId: string, destinationId: string) => {
   await db
     .insertInto("trip_destination")
     .values({
@@ -15,10 +12,7 @@ export const addTripDestination = async (
   return { tripId, destinationId };
 };
 
-export const removeTripDestination = async (
-  tripId: string,
-  destinationId: string
-) => {
+export const removeTripDestination = async (tripId: string, destinationId: string) => {
   const { selected_destination_id } = await db
     .selectFrom("trip")
     .where("id", "=", tripId)
@@ -26,10 +20,7 @@ export const removeTripDestination = async (
     .executeTakeFirstOrThrow();
 
   if (selected_destination_id === destinationId) {
-    await db
-      .updateTable("trip")
-      .set({ selected_destination_id: null })
-      .execute();
+    await db.updateTable("trip").set({ selected_destination_id: null }).execute();
   }
 
   await db

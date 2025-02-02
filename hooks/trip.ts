@@ -16,10 +16,7 @@ const createTrip = async (tripData: TripPayload) => {
   return res.json();
 };
 
-const updateTrip = async ({
-  id,
-  ...patch
-}: Partial<TripPayload> & { id: string }) => {
+const updateTrip = async ({ id, ...patch }: Partial<TripPayload> & { id: string }) => {
   const res = await fetch(`/api/trips/${id}`, {
     method: "PATCH",
     body: JSON.stringify(patch),
@@ -116,10 +113,7 @@ export const useUpdateTrip = () => {
     },
     onMutate: async (patchData) => {
       await queryClient.cancelQueries({ queryKey: ["trip", patchData.id] });
-      const previousTrip = queryClient.getQueryData<CompleteTrip>([
-        "trip",
-        patchData.id,
-      ]);
+      const previousTrip = queryClient.getQueryData<CompleteTrip>(["trip", patchData.id]);
       queryClient.setQueryData<CompleteTrip>(["trip", patchData.id], (old) => ({
         ...old!,
         ...patchData,

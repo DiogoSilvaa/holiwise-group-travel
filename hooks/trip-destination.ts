@@ -49,8 +49,7 @@ export const useRemoveTripDestination = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: TripDestinationPayload) =>
-      await removeTripDestinationApi(payload),
+    mutationFn: async (payload: TripDestinationPayload) => await removeTripDestinationApi(payload),
     onSuccess: async (_, payload) => {
       await queryClient.invalidateQueries({ queryKey: ["trips"] });
       await queryClient.invalidateQueries({

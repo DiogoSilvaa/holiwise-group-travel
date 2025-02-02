@@ -10,20 +10,11 @@ interface CardProps {
   menu?: ReactNode;
 }
 
-export const Card: FC<CardProps> = ({
-  name,
-  image_urls,
-  owner_src,
-  onClick,
-  menu,
-}) => {
+export const Card: FC<CardProps> = ({ name, image_urls, owner_src, onClick, menu }) => {
   const count = image_urls.length;
 
   return (
-    <div
-      className="relative flex flex-col space-y-2 cursor-pointer"
-      onClick={onClick}
-    >
+    <div className="relative flex flex-col space-y-2 cursor-pointer" onClick={onClick}>
       <div className="relative aspect-video overflow-hidden rounded-xl">
         {count > 0 ? (
           image_urls.map((url, index) => {

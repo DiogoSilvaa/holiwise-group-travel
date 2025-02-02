@@ -3,13 +3,7 @@
 import { FC, ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../dialog";
 import { Form } from "../form";
 import { Button } from "../button";
 import { TripFormFields } from "./trip-form-fields";
@@ -33,13 +27,8 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
       end: trip.end ? new Date(trip.end) : undefined,
     },
   };
-  const {
-    isCalendarOpen,
-    tempDates,
-    setTempDates,
-    handleCalendarOpenChange,
-    handleCancelDates,
-  } = useDatepicker({ start: defaults.date.start, end: defaults.date.end });
+  const { isCalendarOpen, tempDates, setTempDates, handleCalendarOpenChange, handleCancelDates } =
+    useDatepicker({ start: defaults.date.start, end: defaults.date.end });
   const { mutate } = useUpdateTrip();
   const router = useRouter();
   const { mutate: deleteTrip } = useDeleteTrip();
@@ -98,10 +87,7 @@ export const EditTripDialog: FC<EditTripDialogProps> = ({ children, trip }) => {
           <DialogTitle>Edit your trip</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form
-            className="flex flex-col space-y-6"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+          <form className="flex flex-col space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <TripFormFields
               control={form.control}
               tempDates={tempDates}

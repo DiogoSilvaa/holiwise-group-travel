@@ -10,9 +10,7 @@ export const querySingleTrip = async (
     .leftJoin("User as u", "u.id", "t.owner_id")
     .leftJoin("trip_access as ta", "ta.trip_id", "t.id")
     .where("t.id", "=", tripId)
-    .where((eb) =>
-      eb.or([eb("t.owner_id", "=", userId), eb("ta.user_id", "=", userId)])
-    )
+    .where((eb) => eb.or([eb("t.owner_id", "=", userId), eb("ta.user_id", "=", userId)]))
     .select([
       "t.id",
       "t.start_date",

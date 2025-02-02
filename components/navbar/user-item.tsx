@@ -21,19 +21,12 @@ interface DropdownItemProps {
   onClick?: () => void;
 }
 
-const DropdownItem: FC<DropdownItemProps> = ({
-  icon,
-  text,
-  isDisabled,
-  onClick,
-}) => (
+const DropdownItem: FC<DropdownItemProps> = ({ icon, text, isDisabled, onClick }) => (
   <DropdownMenuItem
     onClick={onClick}
     className={classNames(
       "text-base hover:bg-gray-100 h-11",
-      isDisabled
-        ? "text-gray-500 cursor-not-allowed pointer-events-none"
-        : "cursor-pointer"
+      isDisabled ? "text-gray-500 cursor-not-allowed pointer-events-none" : "cursor-pointer"
     )}
   >
     {icon}
@@ -65,35 +58,16 @@ export const UserItem: FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          className="flex justify-start space-x-1 w-full h-fit"
-          variant="ghost"
-        >
+        <Button className="flex justify-start space-x-1 w-full h-fit" variant="ghost">
           <UserIcon img_src={data.user.image} />
           <span className="truncate">{data.user.email}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex flex-col truncate w-64 space-y-1">
-        <DropdownItem
-          icon={<User strokeWidth="1" />}
-          text="Profile"
-          isDisabled
-        />
-        <DropdownItem
-          icon={<Briefcase strokeWidth="1" />}
-          text="Manage booking"
-          isDisabled
-        />
-        <DropdownItem
-          icon={<CogIcon strokeWidth="1" />}
-          text="Account settings"
-          isDisabled
-        />
-        <DropdownItem
-          icon={<LogOut strokeWidth="1" />}
-          text="Log out"
-          onClick={signOut}
-        />
+        <DropdownItem icon={<User strokeWidth="1" />} text="Profile" isDisabled />
+        <DropdownItem icon={<Briefcase strokeWidth="1" />} text="Manage booking" isDisabled />
+        <DropdownItem icon={<CogIcon strokeWidth="1" />} text="Account settings" isDisabled />
+        <DropdownItem icon={<LogOut strokeWidth="1" />} text="Log out" onClick={signOut} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

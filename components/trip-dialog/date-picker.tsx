@@ -47,19 +47,10 @@ export const DatePicker = ({
         initialFocus
       />
       <div className="flex gap-2 p-2 border-t">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-          className="flex-1"
-        >
+        <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
           Cancel
         </Button>
-        <Button
-          type="button"
-          onClick={() => onOpenChange(false)}
-          className="flex-1"
-        >
+        <Button type="button" onClick={() => onOpenChange(false)} className="flex-1">
           Confirm
         </Button>
       </div>

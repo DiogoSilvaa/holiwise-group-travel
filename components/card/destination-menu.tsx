@@ -3,7 +3,6 @@ import { Button } from "../button";
 import { ActionMenu } from "../action-menu/action-menu";
 import { Check, Plus } from "lucide-react";
 import { Trip } from "@/app/api/trips/types";
-import classNames from "classnames";
 
 interface DestinationCardMenuProps {
   id: string;
@@ -11,16 +10,9 @@ interface DestinationCardMenuProps {
   trips: Trip[];
 }
 
-export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({
-  id,
-  trips,
-  onAddToTrip,
-}) => {
+export const DestinationCardMenu: FC<DestinationCardMenuProps> = ({ id, trips, onAddToTrip }) => {
   return (
-    <ActionMenu
-      header="Lisbon, Portugal"
-      description="Add this destination to your trips"
-    >
+    <ActionMenu header="Lisbon, Portugal" description="Add this destination to your trips">
       <div className="flex flex-col space-y-3 max-h-48 overflow-y-auto no-scrollbar">
         {trips.map((t) => {
           const isAlreadyInTrip = t.destinationIds.includes(id);

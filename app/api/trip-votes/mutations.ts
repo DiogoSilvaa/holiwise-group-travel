@@ -1,9 +1,7 @@
 import { db } from "@/lib/db";
 import { TripVotePayload, TripVoteResult } from "./types";
 
-export const toggleTripVote = async (
-  payload: TripVotePayload
-): Promise<TripVoteResult> => {
+export const toggleTripVote = async (payload: TripVotePayload): Promise<TripVoteResult> => {
   const { tripId, destinationId, userId } = payload;
   const existingVote = await db
     .selectFrom("trip_votes")

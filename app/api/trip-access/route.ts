@@ -7,10 +7,7 @@ export const POST = async (req: Request) => {
   try {
     const payload: TripAccessPayload = await req.json();
     if (!payload.tripId || !payload.email) {
-      return constructResponse(
-        { error: "Missing required fields: tripId and email" },
-        400
-      );
+      return constructResponse({ error: "Missing required fields: tripId and email" }, 400);
     }
     const result = await addTripAccess(payload);
     return constructResponse(result, 201);
@@ -24,10 +21,7 @@ export const DELETE = async (req: Request) => {
   try {
     const payload: TripAccessPayload = await req.json();
     if (!payload.tripId || !payload.email) {
-      return constructResponse(
-        { error: "Missing required fields: tripId and email" },
-        400
-      );
+      return constructResponse({ error: "Missing required fields: tripId and email" }, 400);
     }
     const result = await removeTripAccess(payload);
     return constructResponse(result, 200);
@@ -42,10 +36,7 @@ export const GET = async (req: Request) => {
     const { searchParams } = new URL(req.url);
     const tripId = searchParams.get("tripId");
     if (!tripId) {
-      return constructResponse(
-        { error: "Missing required query parameter: tripId" },
-        400
-      );
+      return constructResponse({ error: "Missing required query parameter: tripId" }, 400);
     }
     const result = await queryTripAccess(tripId);
     return constructResponse(result, 200);

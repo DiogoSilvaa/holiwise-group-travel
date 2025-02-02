@@ -16,7 +16,7 @@ export const POST = async (req: Request) => {
 
     const result = await toggleTripVote(payload);
     return constructResponse(result, 200);
-  } catch (error) {
+  } catch {
     return constructResponse({ error: "Internal server error" }, 500);
   }
 };
@@ -31,8 +31,7 @@ export const GET = async (req: Request) => {
     if (!tripId || !destinationId || !userId) {
       return constructResponse(
         {
-          error:
-            "Missing required query parameters: tripId, destinationId, userId",
+          error: "Missing required query parameters: tripId, destinationId, userId",
         },
         400
       );
@@ -40,7 +39,7 @@ export const GET = async (req: Request) => {
 
     const result = await queryTripVotes(tripId, destinationId, userId);
     return constructResponse(result, 200);
-  } catch (error) {
+  } catch {
     return constructResponse({ error: "Internal server error" }, 500);
   }
 };

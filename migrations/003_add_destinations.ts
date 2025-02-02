@@ -26,7 +26,5 @@ export const up = async (db: Kysely<any>): Promise<void> => {
 };
 
 export const down = async (db: Kysely<DB>): Promise<void> => {
-  db.deleteFrom("destination")
-    .where("name", "in", ["Cancun", "Aguadilla", "Lisbon"])
-    .execute();
+  db.deleteFrom("destination").where("name", "in", ["Cancun", "Aguadilla", "Lisbon"]).execute();
 };

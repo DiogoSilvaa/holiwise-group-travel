@@ -14,7 +14,7 @@ export const GET = async (req: Request) => {
   try {
     const trips = await queryAllTrips(userId);
     return constructResponse(trips, 200);
-  } catch (error) {
+  } catch {
     return constructResponse({ error: "Internal server error" }, 500);
   }
 };
@@ -31,7 +31,7 @@ export const POST = async (req: Request) => {
     const tripId = await createTrip(requestBody);
 
     return constructResponse({ id: tripId }, 201);
-  } catch (error) {
+  } catch {
     return constructResponse({ error: "Internal server error" }, 500);
   }
 };

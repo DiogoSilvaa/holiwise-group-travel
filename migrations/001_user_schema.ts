@@ -5,9 +5,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
   // Users table
   await db.schema
     .createTable("User")
-    .addColumn("id", "uuid", (col) =>
-      col.primaryKey().defaultTo(sql`gen_random_uuid()`)
-    )
+    .addColumn("id", "uuid", (col) => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
     .addColumn("name", "text")
     .addColumn("email", "text", (col) => col.unique().notNull())
     .addColumn("emailVerified", "timestamptz")
@@ -17,12 +15,8 @@ export const up = async (db: Kysely<any>): Promise<void> => {
   // Account table
   await db.schema
     .createTable("Account")
-    .addColumn("id", "uuid", (col) =>
-      col.primaryKey().defaultTo(sql`gen_random_uuid()`)
-    )
-    .addColumn("userId", "uuid", (col) =>
-      col.references("User.id").onDelete("cascade").notNull()
-    )
+    .addColumn("id", "uuid", (col) => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
+    .addColumn("userId", "uuid", (col) => col.references("User.id").onDelete("cascade").notNull())
     .addColumn("type", "text", (col) => col.notNull())
     .addColumn("provider", "text", (col) => col.notNull())
     .addColumn("providerAccountId", "text", (col) => col.notNull())
@@ -38,12 +32,8 @@ export const up = async (db: Kysely<any>): Promise<void> => {
   // Session table
   await db.schema
     .createTable("Session")
-    .addColumn("id", "uuid", (col) =>
-      col.primaryKey().defaultTo(sql`gen_random_uuid()`)
-    )
-    .addColumn("userId", "uuid", (col) =>
-      col.references("User.id").onDelete("cascade").notNull()
-    )
+    .addColumn("id", "uuid", (col) => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
+    .addColumn("userId", "uuid", (col) => col.references("User.id").onDelete("cascade").notNull())
     .addColumn("sessionToken", "text", (col) => col.notNull().unique())
     .addColumn("expires", "timestamptz", (col) => col.notNull())
     .execute();
@@ -56,17 +46,9 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .addColumn("expires", "timestamptz", (col) => col.notNull())
     .execute();
 
-  await db.schema
-    .createIndex("Account_userId_index")
-    .on("Account")
-    .column("userId")
-    .execute();
+  await db.schema.createIndex("Account_userId_index").on("Account").column("userId").execute();
 
-  await db.schema
-    .createIndex("Session_userId_index")
-    .on("Session")
-    .column("userId")
-    .execute();
+  await db.schema.createIndex("Session_userId_index").on("Session").column("userId").execute();
 };
 
 export const down = async (db: Kysely<any>): Promise<void> => {
