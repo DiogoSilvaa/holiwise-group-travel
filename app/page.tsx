@@ -57,7 +57,7 @@ const Home = () => {
         <h2 className="mt-3.5 text-gray-800/65">Organise all your travel planning in one place</h2>
       </div>
       <section>
-        <div className="flex space-x-4 items-center mb-4">
+        <div className="flex space-x-4 items-center mb-2">
           <p className="font-bold text-2xl">My trips</p>
           <CreateTripDialog destinations={dests ?? []}>
             <Button variant="outline" className="h-10 w-24 bg-gray-50 rounded-md">
@@ -84,7 +84,7 @@ const Home = () => {
         </div>
       </section>
       <section>
-        <p className="font-bold text-2xl mb-1">My destinations</p>
+        <p className="font-bold text-2xl mb-2">My destinations</p>
         <TypeSelect
           defaultOption={defaultTypeOption}
           options={destinationTypeOptions}
