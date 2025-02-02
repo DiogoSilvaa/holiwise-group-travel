@@ -65,7 +65,7 @@ export const UserItem: FC = () => {
           <span className="truncate">{data.user.email}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex flex-col truncate w-64 space-y-1">
+      <DropdownMenuContent className="flex flex-col truncate w-64 xl:w-52 space-y-1">
         <DropdownItem icon={<User strokeWidth="1" />} text="Profile" isDisabled />
         <DropdownItem icon={<Briefcase strokeWidth="1" />} text="Manage booking" isDisabled />
         <DropdownItem icon={<CogIcon strokeWidth="1" />} text="Account settings" isDisabled />
