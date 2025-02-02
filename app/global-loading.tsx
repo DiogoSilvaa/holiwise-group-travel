@@ -6,13 +6,15 @@ import { Logo } from "@/components/icons/logo";
 
 export const GlobalLoading = () => {
   const isFetching = useIsFetching();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (isFetching) {
+    if (isFetching && isFirstLoad) {
+      setIsFirstLoad(false);
       setIsVisible(true);
     } else {
-      const timeout = setTimeout(() => setIsVisible(false), 100);
+      const timeout = setTimeout(() => setIsVisible(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [isFetching]);

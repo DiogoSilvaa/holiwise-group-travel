@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   return (
-    <div className="container px-6 flex flex-col space-y-8">
+    <div className="container px-6 lg:px-28 flex flex-col space-y-12 pb-10 lg:pb-28">
       <div className="text-center">
         <h1 className="text-4xl font-bold">My trips</h1>
         <h2 className="mt-3.5 text-gray-800/65">Organise all your travel planning in one place</h2>
@@ -52,7 +52,7 @@ const Home = () => {
             </Button>
           </CreateTripDialog>
         </div>
-        <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
           {trips?.map(({ id, ownerSrc, name, imageUrls }) => (
             <Card
               key={id}
@@ -71,7 +71,7 @@ const Home = () => {
           options={destinationTypeOptions}
           setType={setType}
         />
-        <div className="grid grid-cols-2 gap-x-2 gap-y-6 mt-3">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-8 gap-y-8 mt-4">
           {destinations?.map(({ id, name, image_url }) => (
             <Card
               name={name}

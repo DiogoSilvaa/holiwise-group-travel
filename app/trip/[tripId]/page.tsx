@@ -16,11 +16,11 @@ const TripPage = () => {
   const { data: trip, status } = useFetchTrip(tripId);
 
   if (status === "pending" || !trip) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   return (
-    <div className="container px-6 flex flex-col space-y-8">
+    <div className="container px-6 flex flex-col space-y-8 lg:px-28 pb-10 lg:pb-28">
       <TripHeader trip={trip} isOwner={data?.user.email === trip.ownerEmail} />
       <TripTabs trip={trip} />
     </div>

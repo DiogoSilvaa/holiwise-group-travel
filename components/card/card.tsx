@@ -33,8 +33,7 @@ export const Card: FC<CardProps> = ({ name, image_urls, owner_src, onClick, menu
                   alt={name}
                   priority
                   quality={50}
-                  width={200}
-                  height={200}
+                  fill
                   className="object-cover rounded-xl"
                 />
               </div>
@@ -45,10 +44,9 @@ export const Card: FC<CardProps> = ({ name, image_urls, owner_src, onClick, menu
             <Image
               src="/images/placeholder.webp"
               alt={name}
-              width={200}
-              height={200}
-              priority
+              fill
               className="object-cover rounded-xl"
+              priority
             />
             <div className="absolute inset-0 bg-black opacity-40 rounded-xl"></div>
             <div className="absolute inset-0 flex text-center items-center justify-center p-4 text-white text-sm font-semibold z-10">

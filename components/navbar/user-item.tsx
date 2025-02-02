@@ -48,6 +48,7 @@ export const UserItem: FC = () => {
           src="https://www.svgrepo.com/show/475656/google-color.svg"
           alt="Google Icon"
           width={24}
+          priority
           height={24}
         />
         <span>Sign in with Google</span>

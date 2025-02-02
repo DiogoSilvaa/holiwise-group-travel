@@ -53,7 +53,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           </Button>
         )}
       </SheetTrigger>
-      <SheetContent side="bottom" className="sm:max-w-lg p-0 rounded-xl">
+      <SheetContent side="bottom" className="w-full p-0 rounded-t-xl">
         <motion.div
           className="w-12 h-1.5 bg-gray-300 rounded-full my-2 mx-auto cursor-grab"
           drag="y"
@@ -61,7 +61,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: "grabbing" }}
         />
-        <div className="py-4 px-8">
+        <div className="py-4 px-8 lg:px-36">
           <SheetHeader className="mb-4 font-semibold text-start">
             <SheetTitle className="text-xl">{header}</SheetTitle>
             <SheetDescription>{description}</SheetDescription>

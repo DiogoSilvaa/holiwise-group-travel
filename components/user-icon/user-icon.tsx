@@ -15,6 +15,7 @@ export const UserIcon: FC<UserIconProps> = ({ size = "normal", img_src }) => {
         alt="user profile picture"
         width={size === "normal" ? 48 : 28}
         height={size === "normal" ? 48 : 28}
+        priority
       />
     </div>
   );
