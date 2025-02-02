@@ -4,9 +4,12 @@ import { ArrowBigUpIcon, Pin } from "lucide-react";
 import Image from "next/image";
 import { FC } from "react";
 import { TripDestinationMenu } from "./menu";
+import { useFetchTripVotes, useToggleTripVote } from "@/hooks/trip-votes";
+import classNames from "classnames";
 
 export type SelectedDestinationCardProps =
   | {
+      tripId: string;
       destination: Destination;
       isSelected: true;
       onDeselect: (id: string) => void;
@@ -14,6 +17,7 @@ export type SelectedDestinationCardProps =
       onSelect?: never;
     }
   | {
+      tripId: string;
       destination: Destination;
       isSelected?: false;
       onSelect: (id: string) => void;
@@ -25,6 +29,13 @@ export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (
   props
 ) => {
   const { image_url, name } = props.destination;
+  const { data: voteResult } = useFetchTripVotes({
+    tripId: props.tripId,
+    destinationId: props.destination.id,
+  });
+  const { mutate } = useToggleTripVote();
+  const toggleVote = () =>
+    mutate({ tripId: props.tripId, destinationId: props.destination.id });
   return (
     <div className="p-3 border border-gray-200 rounded-lg">
       <div className="relative">
@@ -48,10 +59,14 @@ export const SelectedDestinationCard: FC<SelectedDestinationCardProps> = (
         )}
         <div className="mt-3 space-y-2">
           <h4 className="text-base font-semibold">{name}</h4>
-          <Button variant="outline">
+          <Button variant="outline" className="w-14" onClick={toggleVote}>
             <div className="flex text-center items-center space-x-1">
-              <ArrowBigUpIcon />
-              <span className="relative bottom-[0.5px]">1</span>
+              <ArrowBigUpIcon
+                className={classNames(voteResult?.hasVoted ? "fill-black" : "")}
+              />
+              <span className="relative bottom-[0.5px]">
+                {voteResult?.totalVotes}
+              </span>
             </div>
           </Button>
         </div>
