@@ -15,7 +15,7 @@ interface CardProps {
 
 const DropOverlay = () => (
   <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
-    <span className="text-white font-semibold">DROP HERE</span>
+    <span className="text-white font-semibold">Drop here</span>
   </div>
 );
 
