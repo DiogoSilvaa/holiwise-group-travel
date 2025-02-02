@@ -39,7 +39,6 @@ const Home = () => {
   const router = useRouter();
   const [type, setType] = useState("all");
   const [tripStatus, setTripStatus] = useState("all");
-  console.log("trips", trips);
   if (!dests || !trips) {
     return null;
   }
@@ -63,8 +62,6 @@ const Home = () => {
       if (canDrop) onAddDestination(String(trip.id), String(destination.id));
     }
   };
-
-  console.log(draggingId);
 
   return (
     <DndContext
